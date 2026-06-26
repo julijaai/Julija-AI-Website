@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="sr-Latn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Julija AI — Beta pristup</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #FAF8F4;
+    --cream-mid: #F3EFE8;
+    --cream-dark: #E8E1D6;
+    --blush: #E8D5CC;
+    --blush-mid: #D4B5A8;
+    --rose: #C49080;
+    --rose-deep: #A06A58;
+    --rose-light: rgba(196,144,128,0.12);
+    --sage: #8A9E8C;
+    --sage-light: #C4D4C6;
+    --bark: #5C4A3A;
+    --ink: #2C2118;
+    --ink-mid: #4A3828;
+    --ink-soft: #7A6658;
+    --ink-muted: #9A8878;
+    --white: #FFFFFF;
+    --font-display: 'Cormorant Garamond', Georgia, serif;
+    --font-body: 'DM Sans', system-ui, sans-serif;
+    --shadow-soft: 0 4px 32px rgba(44,33,24,0.08);
+    --shadow-card: 0 2px 16px rgba(44,33,24,0.06);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--cream);
+    color: var(--ink);
+    line-height: 1.7;
+    font-size: 16px;
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+
+  /* ── AI TRANSPARENCY BANNER ── */
+  .ai-banner {
+    background: var(--ink-mid);
+    color: rgba(250,248,244,0.75);
+    text-align: center;
+    font-size: 12px;
+    font-weight: 400;
+    padding: 9px 20px;
+    letter-spacing: 0.01em;
+    line-height: 1.5;
+    position: sticky;
+    top: 0;
+    z-index: 102;
+  }
+  .ai-banner strong { color: rgba(250,248,244,0.95); font-weight: 500; }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky;
+    top: 37px;
+    z-index: 100;
+    padding: 16px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(250,248,244,0.92);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border-bottom: 1px solid rgba(92,74,58,0.08);
+  }
+  .nav-logo {
+    font-family: var(--font-display);
+    font-size: 26px;
+    font-weight: 500;
+    color: var(--ink);
+    text-decoration: none;
+    letter-spacing: 0.02em;
+  }
+  .nav-logo span { color: var(--rose); }
+
+  /* ── BETA BADGE ── */
+  .beta-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: rgba(196,144,128,0.15);
+    border: 1px solid rgba(196,144,128,0.3);
+    color: var(--rose-deep);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border-radius: 100px;
+    margin-bottom: 28px;
+  }
+  .beta-pill::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--rose);
+    animation: pulse 2s ease-in-out infinite;
+    flex-shrink: 0;
+  }
+  @keyframes pulse {
+    0%,100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.75); }
+  }
+
+  /* ── HERO ── */
+  .hero {
+    padding: 72px 40px 56px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 50% 80% at 90% 50%, rgba(196,144,128,0.1) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 60% at 5% 40%, rgba(138,158,140,0.08) 0%, transparent 70%),
+      var(--cream);
+  }
+  .hero-inner {
+    max-width: 760px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+  }
+  .hero h1 {
+    font-family: var(--font-display);
+    font-size: clamp(34px, 4.5vw, 52px);
+    font-weight: 400;
+    line-height: 1.2;
+    color: var(--ink);
+    margin-bottom: 16px;
+    letter-spacing: -0.01em;
+  }
+  .hero h1 em { font-style: italic; color: var(--rose-deep); }
+  .hero-sub {
+    font-size: 17px;
+    font-weight: 300;
+    color: var(--ink-soft);
+    line-height: 1.75;
+    max-width: 580px;
+    margin-bottom: 0;
+  }
+
+  /* ── PRIVACY NOTE ── */
+  .privacy-strip {
+    background: var(--white);
+    border-top: 1px solid var(--cream-dark);
+    border-bottom: 1px solid var(--cream-dark);
+    padding: 14px 40px;
+  }
+  .privacy-strip-inner {
+    max-width: 760px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    flex-wrap: wrap;
+  }
+  .privacy-item {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--ink-muted);
+  }
+  .privacy-item::before {
+    content: '';
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3 8l3.5 3.5L13 5' stroke='%238A9E8C' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") center/contain no-repeat;
+  }
+
+  /* ── WIDGET SECTION ── */
+  .widget-section {
+    padding: 40px 40px 80px;
+  }
+  .widget-inner {
+    max-width: 760px;
+    margin: 0 auto;
+  }
+  .widget-wrap {
+    background: var(--white);
+    border: 1px solid var(--cream-dark);
+    border-radius: 28px;
+    overflow: hidden;
+    box-shadow: var(--shadow-soft);
+    position: relative;
+  }
+  .widget-header {
+    padding: 22px 28px 20px;
+    border-bottom: 1px solid var(--cream-dark);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--white);
+  }
+  .widget-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--blush), var(--sage-light));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-size: 19px;
+    font-weight: 500;
+    color: var(--rose-deep);
+    flex-shrink: 0;
+  }
+  .widget-info {}
+  .widget-name {
+    font-weight: 500;
+    font-size: 15px;
+    color: var(--ink);
+  }
+  .widget-status {
+    font-size: 12px;
+    color: var(--sage);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .widget-status::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--sage);
+  }
+
+  /* Voiceflow iframe */
+  .widget-wrap iframe {
+    display: block;
+    width: 100%;
+    border: none;
+    min-height: 560px;
+  }
+  @media (max-width: 640px) {
+    .widget-wrap iframe { min-height: 480px; height: 480px; }
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--cream-mid);
+    padding: 40px 40px;
+    border-top: 1px solid var(--cream-dark);
+  }
+  .footer-inner {
+    max-width: 760px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  .footer-logo {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .footer-logo span { color: var(--rose); }
+  .footer-tagline {
+    font-size: 12px;
+    color: var(--ink-muted);
+    margin-top: 3px;
+    font-weight: 300;
+  }
+  .footer-links {
+    display: flex;
+    gap: 24px;
+    list-style: none;
+  }
+  .footer-links a {
+    font-size: 12px;
+    color: var(--ink-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--ink-soft); }
+  .footer-crisis {
+    font-size: 12px;
+    color: var(--ink-muted);
+    font-weight: 300;
+    line-height: 1.7;
+    width: 100%;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--cream-dark);
+    margin-bottom: 4px;
+  }
+  .footer-crisis a { color: var(--rose-deep); text-decoration: none; }
+  .footer-crisis a:hover { text-decoration: underline; }
+
+  /* ── MODAL ── */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(44,33,24,0.6);
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    backdrop-filter: blur(4px);
+  }
+  .modal-overlay.open { display: flex; }
+  .modal-box {
+    background: var(--white);
+    border-radius: 24px;
+    max-width: 680px;
+    width: 100%;
+    max-height: 82vh;
+    overflow-y: auto;
+    padding: 44px 48px;
+    position: relative;
+    box-shadow: 0 24px 80px rgba(44,33,24,0.18);
+  }
+  .modal-close {
+    position: absolute;
+    top: 20px;
+    right: 24px;
+    background: var(--cream-mid);
+    border: none;
+    border-radius: 50%;
+    width: 34px;
+    height: 34px;
+    font-size: 18px;
+    cursor: pointer;
+    color: var(--ink-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+  }
+  .modal-close:hover { background: var(--cream-dark); }
+  .modal-title {
+    font-family: var(--font-display);
+    font-size: 28px;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+  .modal-sub {
+    font-size: 13px;
+    color: var(--ink-muted);
+    margin-bottom: 28px;
+    font-weight: 300;
+  }
+  .pp-h2 {
+    font-weight: 500;
+    font-size: 15px;
+    color: var(--ink);
+    margin: 22px 0 8px;
+  }
+  .pp-p {
+    font-size: 14px;
+    color: var(--ink-soft);
+    line-height: 1.75;
+    font-weight: 300;
+    margin-bottom: 10px;
+  }
+  .pp-note {
+    background: rgba(196,144,128,0.1);
+    border-left: 3px solid var(--rose);
+    padding: 12px 16px;
+    border-radius: 0 10px 10px 0;
+    font-size: 13px;
+    color: var(--rose-deep);
+    font-weight: 400;
+    margin: 16px 0;
+    line-height: 1.6;
+  }
+  .pp-contact {
+    font-size: 13px;
+    color: var(--ink-muted);
+    margin-top: 8px;
+  }
+  .pp-contact a { color: var(--rose-deep); text-decoration: none; }
+  .pp-contact a:hover { text-decoration: underline; }
+
+  .hero-crisis {
+    font-size: 13px;
+    color: var(--ink-muted);
+    font-weight: 300;
+    line-height: 1.7;
+    margin-top: 20px;
+    max-width: 580px;
+  }
+  .hero-crisis strong { color: var(--ink-soft); font-weight: 500; }
+  .hero-crisis a { color: var(--rose-deep); text-decoration: none; }
+  .hero-crisis a:hover { text-decoration: underline; }
+
+  @media (max-width: 640px) {
+    nav { padding: 14px 20px; }
+    .hero { padding: 52px 20px 40px; }
+    .privacy-strip { padding: 12px 20px; }
+    .widget-section { padding: 24px 20px 60px; }
+    footer { padding: 32px 20px; }
+    .modal-box { padding: 32px 24px; }
+    .widget-header { padding: 18px 20px 16px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- AUTH LOADING OVERLAY -->
+<div id="auth-loading" style="position:fixed;inset:0;background:var(--cream);display:flex;align-items:center;justify-content:center;z-index:999;flex-direction:column;gap:16px;">
+  <div style="font-family:var(--font-display);font-size:32px;font-weight:400;color:var(--ink);">Julija <span style="color:var(--rose);">AI</span></div>
+  <div style="display:flex;gap:6px;" id="dot-loader">
+    <div style="width:7px;height:7px;border-radius:50%;background:var(--rose);animation:bounce 1.2s ease-in-out infinite;"></div>
+    <div style="width:7px;height:7px;border-radius:50%;background:var(--rose);animation:bounce 1.2s ease-in-out infinite;animation-delay:0.2s;"></div>
+    <div style="width:7px;height:7px;border-radius:50%;background:var(--rose);animation:bounce 1.2s ease-in-out infinite;animation-delay:0.4s;"></div>
+  </div>
+</div>
+<style>@keyframes bounce{0%,80%,100%{transform:scale(0.6);opacity:0.4;}40%{transform:scale(1);opacity:1;}}</style>
+
+<div id="page-content" style="display:none">
+
+<!-- AI TRANSPARENCY BANNER -->
+<div class="ai-banner">
+  <strong>Julija AI je alat za emotivnu podršku — nije terapija, nije zamena za stručnu pomoć.</strong>
+  Razgovori su poverljivi.
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="/" class="nav-logo">Julija <span>AI</span></a>
+  <div style="display:flex;align-items:center;gap:16px;">
+    <span id="nav-email" style="font-size:13px;color:var(--ink-muted);font-weight:300;"></span>
+    <button onclick="handleLogout()" style="font-size:13px;color:var(--ink-muted);background:none;border:none;cursor:pointer;font-family:var(--font-body);padding:0;">Odjavi se</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-inner">
+    <div class="beta-pill">Beta pristup · Rani korisnici</div>
+    <h1>Dobrodošli.<br><em>Julija je tu.</em></h1>
+    <p class="hero-sub">Zahvaljujemo ti što učestvuješ u kreiranju Julije AI. Razgovori su privatni i zaštićeni. Molim te budi iskren/a.</p>
+  </div>
+</section>
+
+<!-- PRIVACY STRIP -->
+<div class="privacy-strip">
+  <div class="privacy-strip-inner">
+    <div class="privacy-item">Razgovori su privatni i poverljivi</div>
+    <div class="privacy-item">Ne koriste se za treniranje AI modela</div>
+    <div class="privacy-item">Možeš prestati kad god hoćeš</div>
+    <div class="privacy-item">Julija nije terapija</div>
+  </div>
+</div>
+
+<!-- WIDGET SECTION -->
+<div class="widget-section">
+  <div class="widget-inner">
+    <div class="widget-wrap">
+
+      <div class="widget-header">
+        <div class="widget-avatar">J</div>
+        <div class="widget-info">
+          <div class="widget-name">Julija AI</div>
+          <div class="widget-status">Tu je za tebe</div>
+        </div>
+      </div>
+
+      <!-- MEMORY: conversation history is saved to Supabase.
+           Loading past context into Voiceflow requires API blocks
+           inside the Voiceflow editor — configure separately. -->
+      <iframe
+        src="https://creator.voiceflow.com/share/6a01ed1393f91a17119ee633/environment/main/draft"
+        width="100%"
+        height="620"
+        frameborder="0"
+        allow="microphone"
+        title="Razgovor sa Julijom AI"
+        style="display:block; min-height: 560px;"
+      ></iframe>
+
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-crisis">
+      Ako ti je trenutno jako teško i treba ti hitna podrška — <strong>SOS telefon Srbija: <a href="tel:0800300303">0800 300 303</a></strong> (svaki dan 14–23h) · Hitna pomoć: <a href="tel:194">194</a>
+    </div>
+    <div>
+      <a href="/" class="footer-logo">Julija <span>AI</span></a>
+      <div class="footer-tagline">Beta verzija · Jun 2026</div>
+    </div>
+    <ul class="footer-links">
+      <li><a href="#" onclick="openPrivacy(event)">Politika privatnosti</a></li>
+      <li><a href="#" onclick="openToS(event)">Uslovi korišćenja</a></li>
+      <li><a href="mailto:stanojevicjulija@gmail.com">Kontakt</a></li>
+    </ul>
+  </div>
+</footer>
+
+</div><!-- /page-content -->
+
+<!-- PRIVACY POLICY MODAL -->
+<div class="modal-overlay" id="privacyModal" onclick="closePrivacyOutside(event)">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closePrivacy()" aria-label="Zatvori">×</button>
+    <div class="modal-title">Politika privatnosti</div>
+    <div class="modal-sub">Verzija 1.0 · Na snazi od 20. juna 2026.</div>
+    <div class="pp-h2">Šta prikupljamo</div>
+    <p class="pp-p">Email adresu, tehničke podatke o sesiji i sadržaj razgovora sa Julijom AI. Sadržaj razgovora može sadržati posebne kategorije ličnih podataka (mentalno zdravlje, emotivno stanje) — obrađujemo ih isključivo na osnovu tvoje izričite saglasnosti.</p>
+    <div class="pp-note">Ne koristimo razgovore za treniranje AI modela. Sadržaj razgovora ne delimo ni sa kim bez tvoje izričite saglasnosti.</div>
+    <div class="pp-h2">Ko ima pristup</div>
+    <p class="pp-p">Pristup podacima je ograničen na osnivača platforme, isključivo u svrhu tehničkog razvoja i poboljšanja proizvoda tokom beta faze. Sadržaj razgovora se ne čita u svrhu ličnog praćenja pojedinačnih korisnika.</p>
+    <div class="pp-h2">Treće strane</div>
+    <p class="pp-p"><strong>Anthropic (Claude API)</strong> — obrada teksta razgovora. Anthropic ne koristi API podatke korisnika za treniranje modela. <strong>Voiceflow</strong> — platforma za konverzacioni tok. Oba su američki servisi — prenos podataka u SAD vrši se uz standardne ugovorne klauzule (SCC) u skladu sa GDPR.</p>
+    <div class="pp-h2">Tvoja prava</div>
+    <p class="pp-p">Imaš pravo pristupa, ispravke, brisanja, prenosivosti i prigovora na obradu podataka. Možeš povući saglasnost u svakom trenutku.</p>
+    <div class="pp-contact">Sve zahteve šalji na: <a href="mailto:stanojevicjulija@gmail.com">stanojevicjulija@gmail.com</a> — Odgovaramo u roku od 30 dana.</div>
+  </div>
+</div>
+
+<!-- TERMS OF SERVICE MODAL -->
+<div class="modal-overlay" id="tosModal" onclick="closeToSOutside(event)">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeToS()" aria-label="Zatvori">×</button>
+    <div class="modal-title">Uslovi korišćenja</div>
+    <div class="modal-sub">Verzija 1.0 · Na snazi od 20. juna 2026.</div>
+    <div class="pp-h2">Šta je Julija AI</div>
+    <p class="pp-p">Julija AI je alat za emotivnu podršku i bolje razumevanje sebe, pokretan veštačkom inteligencijom. Nije medicinski uređaj i ne pruža medicinske savete, dijagnoze, psihoterapiju ni lečenje.</p>
+    <div class="pp-note">Julija AI NIJE zamena za stručnu psihološku ili psihijatrijsku pomoć. Ako prolaziš kroz krizu ili veruješ da ti je potrebna stručna podrška — obrati se licenciranom stručnjaku.</div>
+    <div class="pp-h2">Beta servis</div>
+    <p class="pp-p">Julija AI je trenutno u beta fazi. Servis se pruža u svrhu testiranja i prikupljanja povratnih informacija. Funkcionalnosti, odgovori i dostupnost mogu se menjati bez prethodnog obaveštenja. Beta pristup je besplatan.</p>
+    <div class="pp-h2">Tvoje obaveze</div>
+    <p class="pp-p">Korišćenjem Julije AI potvrđuješ da imaš 18 ili više godina i da ćeš servis koristiti isključivo u lične, nekomercijalne svrhe i u skladu sa zakonom.</p>
+    <div class="pp-h2">Krizne situacije</div>
+    <p class="pp-p">Julija AI uključuje osnovne sigurnosne protokole za prepoznavanje potencijalnih kriznih situacija. Međutim, ne može pozvati hitne službe u tvoje ime i nije zamena za kriznu intervenciju stručnih lica.</p>
+    <div class="pp-contact">Krizna linija Srbija: <strong>SOS Centar Srce 0800 300 303</strong> (svaki dan 14–23h) · Hitna pomoć: <strong>194</strong></div>
+  </div>
+</div>
+
+<script>
+  function openPrivacy(e) {
+    if (e) e.preventDefault();
+    document.getElementById('privacyModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closePrivacy() {
+    document.getElementById('privacyModal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function closePrivacyOutside(e) {
+    if (e.target === document.getElementById('privacyModal')) closePrivacy();
+  }
+  function openToS(e) {
+    if (e) e.preventDefault();
+    document.getElementById('tosModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeToS() {
+    document.getElementById('tosModal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function closeToSOutside(e) {
+    if (e.target === document.getElementById('tosModal')) closeToS();
+  }
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') { closePrivacy(); closeToS(); }
+  });
+
+  window.addEventListener('scroll', () => {
+    document.querySelector('nav').style.boxShadow =
+      window.scrollY > 20 ? '0 4px 24px rgba(44,33,24,0.09)' : '';
+  });
+</script>
+
+<script>
+  const { createClient } = supabase;
+  const sb = createClient(
+    'https://yxoqseezjphzufvqnprk.supabase.co',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl4b3FzZWV6anBoenVmdnFucHJrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIzMjQ0MDAsImV4cCI6MjA5NzkwMDQwMH0.MSc2OBAs2sVOHus-7q9twNHwhzP6wL2SkrN5vLr2Mus'
+  );
+
+  let currentUserId = null;
+  let sessionToken = null;
+
+  window.addEventListener('DOMContentLoaded', async () => {
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/login'; return; }
+    if (session.user.banned_until) { window.location.href = '/login?pending=1'; return; }
+
+    currentUserId = session.user.id;
+    sessionToken = session.access_token;
+    document.getElementById('nav-email').textContent = session.user.email;
+
+    // Keep token fresh for long sessions
+    sb.auth.onAuthStateChange((_event, s) => {
+      if (s) { sessionToken = s.access_token; currentUserId = s.user.id; }
+    });
+
+    // Upsert user profile — service role key stays in the edge function
+    await fetch('/api/upsert-profile', {
+      method: 'POST',
+      headers: { 'Authorization': `Bearer ${sessionToken}` },
+    });
+
+    document.getElementById('auth-loading').style.display = 'none';
+    document.getElementById('page-content').style.display = 'block';
+  });
+
+  async function handleLogout() {
+    await sb.auth.signOut();
+    window.location.href = '/login';
+  }
+
+  // Save conversation turns via edge function — service role key never reaches the browser
+  async function saveMessage(role, content) {
+    if (!currentUserId || !sessionToken) return;
+    await fetch('/api/save-message', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${sessionToken}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ role, content }),
+    });
+  }
+
+  // Listen for Voiceflow iframe messages to capture conversation
+  window.addEventListener('message', (event) => {
+    if (!event.data || typeof event.data !== 'object') return;
+    if (event.data.type === 'user-turn') saveMessage('user', event.data.payload);
+    if (event.data.type === 'agent-turn') saveMessage('assistant', event.data.payload);
+  });
+</script>
+</body>
+</html>

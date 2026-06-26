@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="sr-Latn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Prijava — Julija AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GM1JF4GHVE"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-GM1JF4GHVE');
+</script>
+<script type="text/javascript">
+  (function(c,l,a,r,i,t,y){
+    c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+    t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+    y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+  })(window, document, "clarity", "script", "xbpxbcss69");
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #FAF8F4;
+    --cream-mid: #F3EFE8;
+    --cream-dark: #E8E1D6;
+    --blush: #E8D5CC;
+    --blush-mid: #D4B5A8;
+    --rose: #C49080;
+    --rose-deep: #A06A58;
+    --rose-light: rgba(196,144,128,0.12);
+    --sage: #8A9E8C;
+    --sage-light: #C4D4C6;
+    --bark: #5C4A3A;
+    --ink: #2C2118;
+    --ink-mid: #4A3828;
+    --ink-soft: #7A6658;
+    --ink-muted: #9A8878;
+    --white: #FFFFFF;
+    --font-display: 'Cormorant Garamond', Georgia, serif;
+    --font-body: 'DM Sans', system-ui, sans-serif;
+    --transition: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    --shadow-soft: 0 4px 32px rgba(44,33,24,0.08);
+    --shadow-card: 0 2px 16px rgba(44,33,24,0.06);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--cream);
+    color: var(--ink);
+    line-height: 1.7;
+    font-size: 16px;
+    overflow-x: hidden;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── AI TRANSPARENCY BANNER ── */
+  .ai-banner {
+    background: var(--ink-mid); color: rgba(250,248,244,0.75);
+    text-align: center; font-size: 12px; font-weight: 400;
+    padding: 9px 20px; letter-spacing: 0.01em; line-height: 1.5;
+    position: sticky; top: 0; z-index: 102;
+  }
+  .ai-banner strong { color: rgba(250,248,244,0.95); font-weight: 500; }
+
+  /* ── NAV ── */
+  nav {
+    padding: 16px 40px;
+    display: flex; align-items: center;
+    background: rgba(250,248,244,0.92);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border-bottom: 1px solid rgba(92,74,58,0.08);
+  }
+  .nav-logo {
+    font-family: var(--font-display);
+    font-size: 26px; font-weight: 500;
+    color: var(--ink); text-decoration: none; letter-spacing: 0.02em;
+  }
+  .nav-logo span { color: var(--rose); }
+
+  /* ── MAIN ── */
+  .main {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 52px 20px;
+    background:
+      radial-gradient(ellipse 60% 50% at 78% 60%, rgba(196,144,128,0.1) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 60% at 15% 40%, rgba(138,158,140,0.07) 0%, transparent 70%),
+      var(--cream);
+  }
+
+  /* ── LOGIN CARD ── */
+  .login-card {
+    background: var(--white);
+    border: 1px solid var(--cream-dark);
+    border-radius: 24px;
+    padding: 44px 48px;
+    width: 100%;
+    max-width: 440px;
+    box-shadow: var(--shadow-soft);
+  }
+
+  .card-logo {
+    font-family: var(--font-display);
+    font-size: 32px; font-weight: 500;
+    color: var(--ink); text-align: center;
+    margin-bottom: 6px; letter-spacing: 0.02em;
+  }
+  .card-logo span { color: var(--rose); }
+  .card-sub {
+    text-align: center; font-size: 14px; font-weight: 300;
+    color: var(--ink-muted); margin-bottom: 28px; line-height: 1.5;
+  }
+
+  /* ── PENDING MESSAGE ── */
+  .pending-msg {
+    background: rgba(196,144,128,0.1);
+    border: 1px solid rgba(196,144,128,0.3);
+    border-radius: 10px; padding: 14px 16px;
+    font-size: 14px; color: var(--rose-deep);
+    margin-bottom: 20px; display: none; line-height: 1.6;
+  }
+
+  /* ── TABS ── */
+  .tab-bar {
+    display: flex; gap: 4px;
+    background: var(--cream-mid);
+    border-radius: 10px; padding: 4px;
+    margin-bottom: 28px;
+  }
+  .tab-btn {
+    flex: 1; padding: 9px; border-radius: 8px;
+    border: none; background: transparent; cursor: pointer;
+    font-family: var(--font-body); font-size: 14px; font-weight: 400;
+    color: var(--ink-muted); transition: all 0.2s;
+  }
+  .tab-btn.active {
+    background: var(--white); color: var(--ink); font-weight: 500;
+    box-shadow: 0 1px 6px rgba(44,33,24,0.08);
+  }
+
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* ── GOOGLE BUTTON ── */
+  .btn-google {
+    width: 100%; background: var(--white);
+    border: 1px solid var(--cream-dark);
+    border-radius: 12px; padding: 14px;
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    font-family: var(--font-body); font-size: 15px; font-weight: 400;
+    color: var(--ink); cursor: pointer;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .btn-google:hover {
+    border-color: var(--cream-dark);
+    box-shadow: 0 2px 10px rgba(44,33,24,0.08);
+  }
+  .btn-google:disabled { opacity: 0.65; cursor: not-allowed; }
+
+  /* ── DIVIDER ── */
+  .divider-or {
+    display: flex; align-items: center; gap: 12px;
+    margin: 20px 0;
+    font-size: 12px; color: var(--ink-muted); letter-spacing: 0.04em;
+  }
+  .divider-or::before, .divider-or::after {
+    content: ''; flex: 1; height: 1px; background: var(--cream-dark);
+  }
+
+  /* ── FORM FIELDS ── */
+  .form-group { margin-bottom: 14px; }
+  .form-label {
+    display: block; font-size: 11px; font-weight: 500;
+    letter-spacing: 0.07em; text-transform: uppercase;
+    color: var(--ink-muted); margin-bottom: 7px;
+  }
+  .form-input {
+    width: 100%; background: var(--white);
+    border: 1px solid var(--cream-dark); border-radius: 10px;
+    padding: 13px 16px; font-size: 15px; font-family: var(--font-body);
+    color: var(--ink); outline: none; transition: border-color 0.2s;
+    -webkit-appearance: none;
+  }
+  .form-input::placeholder { color: var(--ink-muted); }
+  .form-input:focus { border-color: var(--rose); }
+
+  /* ── FORGOT LINK ── */
+  .forgot-link {
+    font-size: 12px; color: var(--ink-muted);
+    text-align: right; display: block;
+    margin-top: 7px; cursor: pointer;
+    background: none; border: none; padding: 0;
+    font-family: var(--font-body); width: 100%; text-align: right;
+    transition: color 0.2s;
+  }
+  .forgot-link:hover { color: var(--rose-deep); }
+
+  /* ── SUBMIT BUTTON ── */
+  .btn-submit {
+    width: 100%; background: var(--ink); color: var(--cream);
+    border: none; border-radius: 100px; padding: 15px 20px;
+    font-size: 15px; font-weight: 500; font-family: var(--font-body);
+    cursor: pointer; margin-top: 8px;
+    transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    box-shadow: 0 4px 20px rgba(44,33,24,0.15);
+  }
+  .btn-submit:hover { background: var(--bark); transform: translateY(-1px); box-shadow: 0 6px 24px rgba(44,33,24,0.2); }
+  .btn-submit:disabled { opacity: 0.65; cursor: not-allowed; transform: none; box-shadow: none; }
+
+  /* ── SPINNER ── */
+  .spinner {
+    width: 16px; height: 16px;
+    border: 2px solid rgba(250,248,244,0.3);
+    border-top-color: var(--cream);
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    display: none; flex-shrink: 0;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ── MESSAGES ── */
+  .msg-error {
+    font-size: 13px; color: #b83c2b;
+    background: rgba(184,60,43,0.06);
+    border: 1px solid rgba(184,60,43,0.18);
+    border-radius: 8px; padding: 10px 14px;
+    margin-top: 12px; display: none; line-height: 1.55;
+  }
+  .msg-success {
+    background: rgba(138,158,140,0.1);
+    border: 1px solid rgba(138,158,140,0.3);
+    border-radius: 10px; padding: 14px 16px;
+    font-size: 14px; color: var(--ink-soft);
+    margin-top: 16px; display: none; line-height: 1.65;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--cream-mid); padding: 36px 40px;
+    border-top: 1px solid var(--cream-dark);
+  }
+  .footer-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: center;
+    flex-wrap: wrap; gap: 24px;
+  }
+  .footer-links { display: flex; gap: 28px; list-style: none; }
+  .footer-links a {
+    font-size: 13px; color: var(--ink-muted); text-decoration: none; transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--ink); }
+  .footer-disclaimer {
+    max-width: 860px; margin: 20px auto 0;
+    padding-top: 18px; border-top: 1px solid var(--cream-dark);
+    font-size: 12px; color: var(--ink-muted); font-weight: 300;
+    line-height: 1.6; text-align: center;
+  }
+
+  @media (max-width: 640px) {
+    nav { padding: 12px 20px; }
+    .main { padding: 32px 16px; }
+    .login-card { padding: 32px 24px; }
+    footer { padding: 28px 20px; }
+    .footer-links { gap: 20px; flex-wrap: wrap; justify-content: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- AI TRANSPARENCY BANNER -->
+<div class="ai-banner">
+  <strong>Julija AI je veštačka inteligencija</strong> — nije terapeut, psiholog niti stvarna osoba. Razgovori su poverljivi.
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="/" class="nav-logo">Julija <span>AI</span></a>
+</nav>
+
+<!-- MAIN -->
+<main class="main">
+  <div class="login-card">
+    <div class="card-logo">Julija <span>AI</span></div>
+    <p class="card-sub">Emotivna podrška i bolje razumevanje sebe</p>
+
+    <div id="pending-msg" class="pending-msg"></div>
+
+    <!-- TABS -->
+    <div class="tab-bar">
+      <button class="tab-btn active" onclick="switchTab('login')">Prijava</button>
+      <button class="tab-btn" onclick="switchTab('register')">Registracija</button>
+    </div>
+
+    <!-- LOGIN TAB -->
+    <div id="tab-login" class="tab-panel active">
+      <button class="btn-google" id="google-login-btn" onclick="handleGoogle()">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M17.64 9.205c0-.639-.057-1.252-.164-1.841H9v3.481h4.844a4.14 4.14 0 01-1.796 2.716v2.259h2.908c1.702-1.567 2.684-3.875 2.684-6.615z" fill="#4285F4"/>
+          <path d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 009 18z" fill="#34A853"/>
+          <path d="M3.964 10.71A5.41 5.41 0 013.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 000 9c0 1.452.348 2.827.957 4.042l3.007-2.332z" fill="#FBBC05"/>
+          <path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 00.957 4.958L3.964 6.29C4.672 4.163 6.656 3.58 9 3.58z" fill="#EA4335"/>
+        </svg>
+        Nastavi sa Google
+        <span class="spinner" id="google-login-spinner"></span>
+      </button>
+
+      <div class="divider-or">── ili ──</div>
+
+      <div class="form-group">
+        <label class="form-label" for="login-email">Email</label>
+        <input class="form-input" type="email" id="login-email" placeholder="ime@email.com" autocomplete="email">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="login-password">Lozinka</label>
+        <input class="form-input" type="password" id="login-password" placeholder="••••••••" autocomplete="current-password">
+        <button class="forgot-link" onclick="handleForgotPassword()">Zaboravila/o si lozinku?</button>
+      </div>
+
+      <div id="login-error" class="msg-error"></div>
+      <div id="login-success" class="msg-success"></div>
+
+      <button class="btn-submit" id="login-btn" onclick="handleLogin()">
+        <span id="login-btn-text">Prijavi se</span>
+        <span class="spinner" id="login-spinner"></span>
+      </button>
+    </div>
+
+    <!-- REGISTER TAB -->
+    <div id="tab-register" class="tab-panel">
+      <button class="btn-google" id="google-register-btn" onclick="handleGoogle()">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M17.64 9.205c0-.639-.057-1.252-.164-1.841H9v3.481h4.844a4.14 4.14 0 01-1.796 2.716v2.259h2.908c1.702-1.567 2.684-3.875 2.684-6.615z" fill="#4285F4"/>
+          <path d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 009 18z" fill="#34A853"/>
+          <path d="M3.964 10.71A5.41 5.41 0 013.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 000 9c0 1.452.348 2.827.957 4.042l3.007-2.332z" fill="#FBBC05"/>
+          <path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 00.957 4.958L3.964 6.29C4.672 4.163 6.656 3.58 9 3.58z" fill="#EA4335"/>
+        </svg>
+        Nastavi sa Google
+        <span class="spinner" id="google-register-spinner"></span>
+      </button>
+
+      <div class="divider-or">── ili ──</div>
+
+      <div class="form-group">
+        <label class="form-label" for="register-email">Email</label>
+        <input class="form-input" type="email" id="register-email" placeholder="ime@email.com" autocomplete="email">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="register-password">Lozinka</label>
+        <input class="form-input" type="password" id="register-password" placeholder="Minimum 8 karaktera" autocomplete="new-password">
+      </div>
+
+      <div id="register-error" class="msg-error"></div>
+      <div id="register-success" class="msg-success"></div>
+
+      <button class="btn-submit" id="register-btn" onclick="handleRegister()">
+        <span id="register-btn-text">Registruj se</span>
+        <span class="spinner" id="register-spinner"></span>
+      </button>
+    </div>
+
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <ul class="footer-links">
+      <li><a href="#">Politika privatnosti</a></li>
+      <li><a href="#">Uslovi korišćenja</a></li>
+      <li><a href="mailto:stanojevicjulija@gmail.com">stanojevicjulija@gmail.com</a></li>
+    </ul>
+  </div>
+  <div class="footer-disclaimer">
+    Julija AI pruža emotivnu podršku i alate za samorefleksiju. Nije zamena za licenciranog psihologa, psihoterapeuta, psihijatra niti za hitne službe. U slučaju krize pozovi SOS Centar Srce: 0800 300 303 (svaki dan 14:00–23:00) ili Hitnu pomoć: 194.
+  </div>
+</footer>
+
+<script>
+  const { createClient } = supabase;
+  const sb = createClient(
+    'https://yxoqseezjphzufvqnprk.supabase.co',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl4b3FzZWV6anBoenVmdnFucHJrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIzMjQ0MDAsImV4cCI6MjA5NzkwMDQwMH0.MSc2OBAs2sVOHus-7q9twNHwhzP6wL2SkrN5vLr2Mus'
+  );
+
+  window.addEventListener('DOMContentLoaded', async () => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('pending') === '1') {
+      const el = document.getElementById('pending-msg');
+      el.textContent = 'Tvoj nalog čeka odobrenje. Javiću ti se emailom čim bude odobren.';
+      el.style.display = 'block';
+      return;
+    }
+
+    const { data: { session } } = await sb.auth.getSession();
+    if (session) window.location.href = '/beta';
+  });
+
+  function switchTab(tab) {
+    const btns = document.querySelectorAll('.tab-btn');
+    btns[0].classList.toggle('active', tab === 'login');
+    btns[1].classList.toggle('active', tab === 'register');
+    document.getElementById('tab-login').classList.toggle('active', tab === 'login');
+    document.getElementById('tab-register').classList.toggle('active', tab === 'register');
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Enter') return;
+    if (document.getElementById('tab-login').classList.contains('active')) handleLogin();
+    else handleRegister();
+  });
+
+  async function handleGoogle() {
+    const loginActive = document.getElementById('tab-login').classList.contains('active');
+    const spinnerId = loginActive ? 'google-login-spinner' : 'google-register-spinner';
+    const btnId = loginActive ? 'google-login-btn' : 'google-register-btn';
+    document.getElementById(spinnerId).style.display = 'block';
+    document.getElementById(btnId).disabled = true;
+    await sb.auth.signInWithOAuth({
+      provider: 'google',
+      options: { redirectTo: 'https://julijaai.com/beta' }
+    });
+  }
+
+  async function handleLogin() {
+    const email = document.getElementById('login-email').value.trim();
+    const password = document.getElementById('login-password').value;
+    const errorEl = document.getElementById('login-error');
+    const successEl = document.getElementById('login-success');
+    const btn = document.getElementById('login-btn');
+
+    errorEl.style.display = 'none';
+    successEl.style.display = 'none';
+
+    if (!email || !password) { showError(errorEl, 'Unesite email i lozinku.'); return; }
+
+    setLoading(btn, 'login', true);
+    const { error } = await sb.auth.signInWithPassword({ email, password });
+    if (error) {
+      setLoading(btn, 'login', false);
+      showError(errorEl, mapError(error.message));
+    } else {
+      window.location.href = '/beta';
+    }
+  }
+
+  async function handleRegister() {
+    const email = document.getElementById('register-email').value.trim();
+    const password = document.getElementById('register-password').value;
+    const errorEl = document.getElementById('register-error');
+    const successEl = document.getElementById('register-success');
+    const btn = document.getElementById('register-btn');
+
+    errorEl.style.display = 'none';
+    successEl.style.display = 'none';
+
+    if (!email || !password) { showError(errorEl, 'Unesite email i lozinku.'); return; }
+    if (password.length < 8) { showError(errorEl, 'Lozinka mora imati najmanje 8 karaktera.'); return; }
+
+    setLoading(btn, 'register', true);
+    const { error } = await sb.auth.signUp({
+      email,
+      password,
+      options: { emailRedirectTo: 'https://julijaai.com/beta' }
+    });
+    setLoading(btn, 'register', false);
+
+    if (error) {
+      showError(errorEl, mapError(error.message));
+    } else {
+      document.getElementById('google-register-btn').style.display = 'none';
+      document.querySelector('#tab-register .divider-or').style.display = 'none';
+      document.querySelectorAll('#tab-register .form-group').forEach(el => el.style.display = 'none');
+      btn.style.display = 'none';
+      successEl.textContent = 'Proveri email — poslaćemo ti link za potvrdu. Nakon potvrde, tvoja prijava čeka odobrenje. Javiću ti se u roku od 24h.';
+      successEl.style.display = 'block';
+    }
+  }
+
+  async function handleForgotPassword() {
+    const email = document.getElementById('login-email').value.trim();
+    const errorEl = document.getElementById('login-error');
+    const successEl = document.getElementById('login-success');
+    errorEl.style.display = 'none';
+    successEl.style.display = 'none';
+
+    if (!email) {
+      showError(errorEl, 'Unesite email adresu u polje iznad, pa kliknite "Zaboravila/o si lozinku?".');
+      return;
+    }
+
+    const { error } = await sb.auth.resetPasswordForEmail(email, {
+      redirectTo: 'https://julijaai.com/login'
+    });
+
+    if (error) {
+      showError(errorEl, 'Greška pri slanju emaila. Pokušaj ponovo.');
+    } else {
+      successEl.textContent = 'Poslali smo ti link za reset lozinke. Proveri inbox.';
+      successEl.style.display = 'block';
+    }
+  }
+
+  function setLoading(btn, id, on) {
+    btn.disabled = on;
+    document.getElementById(id + '-spinner').style.display = on ? 'block' : 'none';
+    document.getElementById(id + '-btn-text').style.opacity = on ? '0.5' : '1';
+  }
+
+  function showError(el, msg) { el.textContent = msg; el.style.display = 'block'; }
+
+  function mapError(msg) {
+    const m = (msg || '').toLowerCase();
+    if (m.includes('banned') || m.includes('not authorized')) return 'Tvoj nalog čeka odobrenje. Javiću ti se emailom.';
+    if (m.includes('email not confirmed')) return 'Potvrdi email adresu pre prijave. Proveri inbox i spam folder.';
+    if (m.includes('invalid login credentials') || m.includes('invalid credentials')) return 'Pogrešan email ili lozinka.';
+    return msg;
+  }
+</script>
+</body>
+</html>

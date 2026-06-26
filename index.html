@@ -1,0 +1,1678 @@
+<!DOCTYPE html>
+<html lang="sr-Latn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Julija AI — Emotivna podrška i bolje razumevanje sebe</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GM1JF4GHVE"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-GM1JF4GHVE');
+</script>
+<script type="text/javascript">
+  (function(c,l,a,r,i,t,y){
+    c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+    t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+    y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+  })(window, document, "clarity", "script", "xbpxbcss69");
+</script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #FAF8F4;
+    --cream-mid: #F3EFE8;
+    --cream-dark: #E8E1D6;
+    --blush: #E8D5CC;
+    --blush-mid: #D4B5A8;
+    --rose: #C49080;
+    --rose-deep: #A06A58;
+    --rose-light: rgba(196,144,128,0.12);
+    --sage: #8A9E8C;
+    --sage-light: #C4D4C6;
+    --bark: #5C4A3A;
+    --ink: #2C2118;
+    --ink-mid: #4A3828;
+    --ink-soft: #7A6658;
+    --ink-muted: #9A8878;
+    --white: #FFFFFF;
+    --font-display: 'Cormorant Garamond', Georgia, serif;
+    --font-body: 'DM Sans', system-ui, sans-serif;
+    --transition: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    --shadow-soft: 0 4px 32px rgba(44,33,24,0.08);
+    --shadow-card: 0 2px 16px rgba(44,33,24,0.06);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--cream);
+    color: var(--ink);
+    line-height: 1.7;
+    font-size: 16px;
+    overflow-x: hidden;
+  }
+
+  /* ── AI TRANSPARENCY BANNER ── */
+  .ai-banner {
+    background: var(--ink-mid); color: rgba(250,248,244,0.75);
+    text-align: center; font-size: 12px; font-weight: 400;
+    padding: 9px 20px; letter-spacing: 0.01em; line-height: 1.5;
+    position: sticky; top: 0; z-index: 102;
+    max-height: 50px; overflow: hidden;
+    transition: max-height 0.35s ease, opacity 0.35s ease, padding 0.35s ease;
+  }
+  .ai-banner.hidden {
+    max-height: 0; opacity: 0; padding-top: 0; padding-bottom: 0; pointer-events: none;
+  }
+  .ai-banner strong { color: rgba(250,248,244,0.95); font-weight: 500; }
+
+  /* ── PRICING ── */
+  .pricing { background: var(--cream-mid); }
+  .pricing-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+    max-width: 720px; margin: 0 auto;
+  }
+  .pricing-card {
+    background: var(--white); border: 1px solid var(--cream-dark);
+    border-radius: 24px; padding: 36px 32px;
+    position: relative; transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .pricing-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-soft); }
+  .pricing-card.featured {
+    border-color: var(--rose); background: var(--ink);
+  }
+  .pricing-badge {
+    position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+    background: var(--rose); color: var(--cream);
+    font-size: 11px; font-weight: 500; letter-spacing: 0.06em;
+    text-transform: uppercase; padding: 4px 14px; border-radius: 100px;
+  }
+  .pricing-tier { font-size: 12px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 12px; }
+  .pricing-card.featured .pricing-tier { color: rgba(250,248,244,0.5); }
+  .pricing-price { font-family: var(--font-display); font-size: 52px; font-weight: 400; color: var(--ink); line-height: 1; margin-bottom: 4px; }
+  .pricing-card.featured .pricing-price { color: var(--cream); }
+  .pricing-period { font-size: 13px; color: var(--ink-muted); margin-bottom: 24px; }
+  .pricing-card.featured .pricing-period { color: rgba(250,248,244,0.45); }
+  .pricing-features { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
+  .pricing-features li { font-size: 14px; color: var(--ink-soft); display: flex; align-items: center; gap: 10px; font-weight: 300; }
+  .pricing-card.featured .pricing-features li { color: rgba(250,248,244,0.7); }
+  .pricing-features li::before { content: ''; width: 16px; height: 16px; flex-shrink: 0;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3 8l3.5 3.5L13 5' stroke='%238A9E8C' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") center/contain no-repeat; }
+  .pricing-card.featured .pricing-features li::before { filter: brightness(1.8); }
+  .pricing-btn {
+    display: block; text-align: center; padding: 13px 20px;
+    border-radius: 10px; font-size: 14px; font-weight: 500; text-decoration: none;
+    transition: all 0.2s; cursor: pointer; border: none; font-family: var(--font-body); width: 100%;
+  }
+  .pricing-btn-outline { background: transparent; border: 1px solid var(--cream-dark); color: var(--ink-soft); }
+  .pricing-btn-outline:hover { border-color: var(--rose); color: var(--rose-deep); }
+  .pricing-btn-filled { background: var(--rose); color: var(--cream); }
+  .pricing-btn-filled:hover { background: var(--rose-deep); transform: translateY(-1px); }
+  .pricing-note { text-align: center; font-size: 13px; color: var(--ink-muted); margin-top: 20px; font-weight: 300; }
+  @media (max-width: 768px) { .pricing-grid { grid-template-columns: 1fr; max-width: 400px; } }
+
+  /* ── PRIVACY SECTION ── */
+  .privacy-section { background: var(--white); }
+  .privacy-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 48px; }
+  .privacy-card {
+    background: var(--cream); border: 1px solid var(--cream-dark);
+    border-radius: 20px; padding: 28px 24px;
+  }
+  .privacy-icon { font-size: 28px; margin-bottom: 14px; display: block; }
+  .privacy-card h3 { font-family: var(--font-display); font-size: 20px; font-weight: 500; color: var(--ink); margin-bottom: 10px; }
+  .privacy-card p { font-size: 14px; color: var(--ink-soft); line-height: 1.7; font-weight: 300; }
+  @media (max-width: 768px) { .privacy-grid { grid-template-columns: 1fr; } }
+
+  /* ── HOW IT WORKS ── */
+  .how-section { background: var(--ink); }
+  .how-section .section-label { color: var(--blush); }
+  .how-section .section-title { color: var(--cream); }
+  .how-section .section-title em { color: var(--blush-mid); }
+  .steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; margin-top: 56px; position: relative; }
+  .steps-grid::before {
+    content: ''; position: absolute; top: 28px; left: calc(16.66% + 28px); right: calc(16.66% + 28px);
+    height: 1px; background: linear-gradient(90deg, rgba(250,248,244,0.15), rgba(196,144,128,0.3), rgba(250,248,244,0.15));
+  }
+  .step { text-align: center; padding: 0 32px; }
+  .step-num {
+    width: 56px; height: 56px; border-radius: 50%;
+    background: rgba(196,144,128,0.15); border: 1px solid rgba(196,144,128,0.3);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-display); font-size: 22px; font-weight: 400; color: var(--blush-mid);
+    margin: 0 auto 20px;
+  }
+  .step h3 { font-family: var(--font-display); font-size: 20px; font-weight: 400; color: var(--cream); margin-bottom: 10px; }
+  .step p { font-size: 14px; color: rgba(250,248,244,0.5); line-height: 1.7; font-weight: 300; }
+  @media (max-width: 768px) {
+    .steps-grid { grid-template-columns: 1fr; gap: 32px; }
+    .steps-grid::before { display: none; }
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky; top: 37px; left: 0; right: 0; z-index: 100;
+    padding: 16px 40px;
+    display: flex; align-items: center;
+    background: rgba(250,248,244,0.92);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border-bottom: 1px solid rgba(92,74,58,0.08);
+    transition: var(--transition), top 0.35s ease;
+  }
+  .nav-logo {
+    font-family: var(--font-display);
+    font-size: 26px; font-weight: 500;
+    color: var(--ink); text-decoration: none; letter-spacing: 0.02em;
+  }
+  .nav-logo span { color: var(--rose); }
+  .nav-links { display: flex; gap: 32px; list-style: none; align-items: center; margin-left: auto; margin-right: 32px; }
+  .nav-links a {
+    font-size: 14px; color: var(--ink-soft); text-decoration: none;
+    letter-spacing: 0.02em; transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--ink); }
+  .nav-cta {
+    background: var(--ink) !important; color: var(--cream) !important;
+    padding: 10px 22px; border-radius: 100px; font-size: 14px; font-weight: 500;
+    text-decoration: none; transition: background 0.2s, transform 0.2s;
+  }
+  .nav-cta:hover { background: var(--bark) !important; transform: translateY(-1px); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh; display: flex; align-items: center;
+    padding: 120px 40px 80px; position: relative; overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 78% 60%, rgba(196,144,128,0.16) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 60% at 15% 40%, rgba(138,158,140,0.1) 0%, transparent 70%),
+      var(--cream);
+  }
+  .hero-inner {
+    max-width: 1100px; margin: 0 auto; width: 100%;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
+    align-items: center; position: relative; z-index: 2;
+  }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(196,144,128,0.15); border: 1px solid rgba(196,144,128,0.3);
+    color: var(--rose-deep); font-size: 11px; font-weight: 500;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 6px 14px; border-radius: 100px; margin-bottom: 28px;
+  }
+  .hero-eyebrow::before {
+    content: ''; width: 6px; height: 6px; border-radius: 50%;
+    background: var(--rose); animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%,100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.75); }
+  }
+  .hero h1 {
+    font-family: var(--font-display);
+    font-size: clamp(40px, 5vw, 66px);
+    font-weight: 400; line-height: 1.18; color: var(--ink);
+    margin-bottom: 24px; letter-spacing: -0.01em;
+  }
+  .hero h1 em { font-style: italic; color: var(--rose-deep); }
+  .hero-sub {
+    font-size: 17px; font-weight: 300; color: var(--ink-soft);
+    line-height: 1.75; margin-bottom: 44px; max-width: 490px;
+  }
+  .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; }
+  .btn-primary {
+    background: var(--ink); color: var(--cream);
+    padding: 14px 32px; border-radius: 100px;
+    font-size: 15px; font-weight: 500; text-decoration: none;
+    transition: background 0.2s, transform 0.2s, box-shadow 0.2s; display: inline-block;
+    box-shadow: 0 4px 20px rgba(44,33,24,0.2);
+  }
+  .btn-primary:hover { background: var(--bark); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(44,33,24,0.25); }
+  .btn-secondary {
+    color: var(--ink-soft); font-size: 15px; font-weight: 400;
+    text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: color 0.2s;
+  }
+  .btn-secondary:hover { color: var(--ink); }
+  .btn-secondary::after { content: '→'; transition: transform 0.2s; }
+  .btn-secondary:hover::after { transform: translateX(4px); }
+  .hero-trust { display: flex; align-items: center; gap: 12px; margin-top: 40px; }
+  .trust-faces { display: flex; }
+  .trust-face {
+    width: 32px; height: 32px; border-radius: 50%; border: 2px solid var(--cream);
+    margin-left: -8px; background: var(--blush);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 500; color: var(--rose-deep);
+  }
+  .trust-face:first-child { margin-left: 0; }
+  .trust-text { font-size: 13px; color: var(--ink-muted); }
+  .trust-text strong { color: var(--ink-soft); font-weight: 500; }
+
+  /* Hero chat card */
+  .hero-visual { position: relative; }
+  .chat-card {
+    background: var(--white); border-radius: 24px; padding: 28px;
+    box-shadow: var(--shadow-soft); border: 1px solid rgba(92,74,58,0.07);
+  }
+  .chat-header {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 24px; padding-bottom: 20px; border-bottom: 1px solid var(--cream-dark);
+  }
+  .avatar {
+    width: 44px; height: 44px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--blush), var(--sage-light));
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-display); font-size: 20px; font-weight: 500; color: var(--rose-deep); flex-shrink: 0;
+  }
+  .chat-name { font-weight: 500; font-size: 15px; color: var(--ink); }
+  .chat-status {
+    font-size: 12px; color: var(--sage); display: flex; align-items: center; gap: 5px;
+  }
+  .chat-status::before {
+    content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--sage);
+  }
+  .message { margin-bottom: 14px; }
+  .message.user { display: flex; justify-content: flex-end; }
+  .message.user .bubble {
+    background: var(--ink); color: var(--cream);
+    padding: 12px 16px; border-radius: 18px 18px 4px 18px;
+    font-size: 14px; max-width: 80%; line-height: 1.55;
+  }
+  .message.julija .bubble {
+    background: var(--cream-mid); color: var(--ink);
+    padding: 14px 16px; border-radius: 4px 18px 18px 18px;
+    font-size: 14px; max-width: 90%; line-height: 1.65;
+    border: 1px solid var(--cream-dark);
+  }
+  .typing-indicator {
+    display: flex; gap: 4px; align-items: center;
+    padding: 14px 16px; background: var(--cream-mid);
+    border-radius: 4px 18px 18px 18px; width: fit-content;
+    border: 1px solid var(--cream-dark);
+  }
+  .typing-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--ink-muted); animation: typingBounce 1.4s ease-in-out infinite;
+  }
+  .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+  .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes typingBounce {
+    0%,60%,100% { transform: translateY(0); }
+    30% { transform: translateY(-6px); }
+  }
+  .floating-tag {
+    position: absolute; background: var(--white); border: 1px solid var(--cream-dark);
+    border-radius: 12px; padding: 10px 14px; font-size: 13px;
+    color: var(--ink-soft); box-shadow: var(--shadow-card);
+    display: flex; align-items: center; gap: 7px; white-space: nowrap;
+    animation: float 4s ease-in-out infinite;
+    z-index: 4;
+  }
+  @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-7px); } }
+  .tag-1 { top: -22px; right: -18px; animation-delay: 0s; }
+  .tag-2 { bottom: -22px; left: 16px; animation-delay: 1.6s; }
+  .tag-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+  /* ── SHARED SECTION STYLES ── */
+  section { padding: 100px 40px; }
+  .section-inner { max-width: 1100px; margin: 0 auto; }
+  .section-label {
+    font-size: 11px; font-weight: 500; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--rose); margin-bottom: 16px;
+  }
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(34px, 4vw, 52px);
+    font-weight: 400; line-height: 1.2; color: var(--ink); margin-bottom: 20px;
+  }
+  .section-title em { font-style: italic; color: var(--rose-deep); }
+  .section-subtitle {
+    font-size: 17px; font-weight: 300; color: var(--ink-soft);
+    line-height: 1.75; max-width: 560px;
+  }
+  .divider {
+    width: 48px; height: 2px;
+    background: linear-gradient(90deg, var(--rose), transparent);
+    margin: 20px 0 32px;
+  }
+
+  /* ── PROBLEM ── */
+  .problem { background: var(--ink); }
+  .problem .section-label { color: var(--blush); }
+  .problem .section-title { color: var(--cream); }
+  .problem .section-title em { color: var(--blush-mid); }
+  .problem-text {
+    font-size: 18px; font-weight: 300;
+    color: rgba(250,248,244,0.65); line-height: 1.8;
+    max-width: 660px; margin-bottom: 48px;
+  }
+  .problem-text strong { color: rgba(250,248,244,0.9); font-weight: 400; }
+  .problem-text em { font-style: italic; color: var(--blush-mid); }
+  .problem-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px; margin-top: 0;
+  }
+  .problem-card {
+    background: rgba(255,255,255,0.05); border: 1px solid rgba(250,248,244,0.09);
+    border-radius: 20px; padding: 28px; transition: background 0.3s;
+  }
+  .problem-card:hover { background: rgba(255,255,255,0.08); }
+  .problem-icon { font-size: 26px; margin-bottom: 16px; display: block; }
+  .problem-card h3 {
+    font-family: var(--font-display); font-size: 22px; font-weight: 400;
+    color: var(--cream); margin-bottom: 10px;
+  }
+  .problem-card p { font-size: 14px; font-weight: 300; color: rgba(250,248,244,0.55); line-height: 1.7; }
+
+  /* ── FEATURES ── */
+  .features { background: var(--white); }
+  .features-header {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    margin-bottom: 56px; flex-wrap: wrap; gap: 24px;
+  }
+  .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .feature-card {
+    background: var(--cream); border: 1px solid var(--cream-dark);
+    border-radius: 20px; padding: 32px 28px;
+    transition: transform 0.3s, box-shadow 0.3s; position: relative; overflow: hidden;
+  }
+  .feature-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--rose), var(--sage-light));
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .feature-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-soft); }
+  .feature-card:hover::before { opacity: 1; }
+  .feature-tags {
+    display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 20px;
+  }
+  .ftag {
+    font-size: 11px; font-weight: 400;
+    background: rgba(196,144,128,0.12); color: var(--rose-deep);
+    border: 1px solid rgba(196,144,128,0.25);
+    padding: 3px 10px; border-radius: 100px; letter-spacing: 0.02em;
+  }
+  .feature-card h3 {
+    font-family: var(--font-display); font-size: 24px; font-weight: 500;
+    color: var(--ink); margin-bottom: 12px; line-height: 1.25;
+  }
+  .feature-card p { font-size: 14px; color: var(--ink-soft); line-height: 1.7; font-weight: 300; }
+
+  /* ── CONVERSATIONS ── */
+  .conversation-section { background: var(--cream-mid); }
+  .conversation-header { text-align: center; margin-bottom: 56px; }
+  .conversation-header .section-subtitle { margin: 0 auto; }
+  .conv-tabs {
+    display: flex; gap: 8px; justify-content: center; margin-top: 28px; flex-wrap: wrap;
+  }
+  .conv-tab {
+    padding: 8px 18px; border-radius: 100px; font-size: 13px; font-weight: 400;
+    background: transparent; border: 1px solid var(--cream-dark);
+    color: var(--ink-muted); cursor: pointer; transition: all 0.2s; font-family: var(--font-body);
+  }
+  .conv-tab.active, .conv-tab:hover { background: var(--ink); color: var(--cream); border-color: var(--ink); }
+  .conv-panels { max-width: 780px; margin: 0 auto; }
+  .conv-panel {
+    display: none; background: var(--white); border-radius: 24px; padding: 36px;
+    box-shadow: var(--shadow-card); border: 1px solid var(--cream-dark);
+  }
+  .conv-panel.active { display: block; animation: fadeIn 0.4s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+  .conv-topic {
+    font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em;
+    font-weight: 500; margin-bottom: 24px; color: var(--ink-muted);
+  }
+  .conv-msg { display: flex; gap: 12px; margin-bottom: 18px; }
+  .conv-msg.user { flex-direction: row-reverse; }
+  .conv-avatar {
+    width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 500; font-family: var(--font-display);
+  }
+  .conv-avatar.julija-av { background: linear-gradient(135deg, var(--blush), var(--sage-light)); color: var(--rose-deep); }
+  .conv-avatar.user-av { background: var(--cream-dark); color: var(--ink-soft); font-family: var(--font-body); font-size: 11px; }
+  .conv-bubble {
+    max-width: 80%; padding: 14px 18px; border-radius: 4px 18px 18px 18px;
+    font-size: 15px; line-height: 1.65; color: var(--ink);
+    background: var(--cream-mid); border: 1px solid var(--cream-dark);
+  }
+  .conv-msg.user .conv-bubble {
+    background: var(--ink); color: var(--cream);
+    border-radius: 18px 4px 18px 18px; border-color: transparent;
+  }
+  .conv-insight {
+    margin-top: 20px; padding: 16px 20px;
+    background: rgba(196,144,128,0.08); border-left: 3px solid var(--rose);
+    border-radius: 0 12px 12px 0;
+    font-size: 13px; color: var(--ink-soft); font-style: italic; line-height: 1.6;
+  }
+
+  /* ── WHO IT'S FOR ── */
+  .for-section { background: var(--white); }
+  .for-intro {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 60px;
+    align-items: center; margin-bottom: 60px;
+  }
+  .tag-cloud {
+    display: flex; flex-wrap: wrap; gap: 10px;
+  }
+  .topic-tag {
+    font-size: 13px; font-weight: 400;
+    padding: 8px 16px; border-radius: 100px;
+    border: 1px solid var(--cream-dark); color: var(--ink-soft);
+    background: var(--cream); cursor: default;
+    transition: border-color 0.25s, color 0.25s, background 0.25s;
+  }
+  .topic-tag:hover {
+    border-color: var(--rose); color: var(--rose-deep);
+    background: rgba(196,144,128,0.08);
+  }
+  .topic-tag.highlight {
+    background: rgba(196,144,128,0.1); border-color: rgba(196,144,128,0.35);
+    color: var(--rose-deep);
+  }
+
+  /* ── TESTIMONIALS ── */
+  .testimonials { background: var(--cream-mid); }
+  .testimonials-header { text-align: center; margin-bottom: 56px; }
+  .testimonials-header .section-subtitle { margin: 0 auto; }
+  .beta-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(196,144,128,0.15); border: 1px solid rgba(196,144,128,0.3);
+    color: var(--rose-deep); font-size: 11px; font-weight: 500;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 5px 12px; border-radius: 100px; margin-bottom: 20px;
+  }
+  .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .testimonial-card {
+    background: var(--white); border-radius: 20px; padding: 28px;
+    border: 1px solid rgba(92,74,58,0.06); position: relative;
+  }
+  .testimonial-card::before {
+    content: '"'; font-family: var(--font-display); font-size: 80px; line-height: 0;
+    color: var(--blush); position: absolute; top: 38px; right: 22px; opacity: 0.5;
+  }
+  .testimonial-text {
+    font-family: var(--font-display); font-size: 18px; font-weight: 400;
+    font-style: italic; color: var(--ink); line-height: 1.6; margin-bottom: 24px;
+  }
+  .testimonial-author { display: flex; align-items: center; gap: 10px; }
+  .testimonial-avatar {
+    width: 48px; height: 48px; border-radius: 50%; background: var(--blush);
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden; padding: 0; flex-shrink: 0;
+  }
+  .testimonial-avatar img {
+    width: 100%; height: 100%; object-fit: cover;
+    filter: blur(2.5px);
+    transform: scale(1.12);
+    display: block;
+  }
+  .author-name { font-size: 14px; font-weight: 500; color: var(--ink); }
+  .author-detail { font-size: 12px; color: var(--ink-muted); font-weight: 300; }
+
+  /* ── EARLY ACCESS ── */
+  .early-access { background: var(--ink); color: var(--cream); position: relative; overflow: hidden; }
+  .early-access-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 50% 80% at 90% 50%, rgba(196,144,128,0.12) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 60% at 10% 70%, rgba(138,158,140,0.08) 0%, transparent 70%);
+  }
+  .early-access-inner {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
+    align-items: center; position: relative; z-index: 2;
+  }
+  .early-access .section-label { color: var(--blush); }
+  .early-access .section-title { color: var(--cream); }
+  .early-access .section-title em { color: var(--blush-mid); }
+  .early-access .section-subtitle { color: rgba(250,248,244,0.6); }
+  .early-bullets { margin-top: 32px; display: flex; flex-direction: column; gap: 12px; }
+  .early-bullet {
+    display: flex; align-items: center; gap: 12px;
+    font-size: 14px; font-weight: 300; color: rgba(250,248,244,0.75);
+  }
+  .early-bullet::before {
+    content: ''; width: 20px; height: 20px; border-radius: 50%; flex-shrink: 0;
+    background: rgba(196,144,128,0.18) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M6 10l3 3 5-5' stroke='%23C49080' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") center/cover;
+    border: 1px solid rgba(196,144,128,0.35);
+  }
+
+  /* Form */
+  .signup-form {
+    background: rgba(255,255,255,0.07); border: 1px solid rgba(250,248,244,0.1);
+    border-radius: 24px; padding: 40px;
+  }
+  .form-group { margin-bottom: 18px; }
+  .form-label {
+    display: block; font-size: 11px; font-weight: 500;
+    letter-spacing: 0.07em; text-transform: uppercase;
+    color: rgba(250,248,244,0.45); margin-bottom: 8px;
+  }
+  .form-input, .form-select, .form-textarea {
+    width: 100%; background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(250,248,244,0.12); border-radius: 10px;
+    padding: 13px 16px; font-size: 15px; font-family: var(--font-body);
+    color: var(--cream); outline: none; transition: border-color 0.2s, background 0.2s;
+    -webkit-appearance: none;
+  }
+  .form-input::placeholder { color: rgba(250,248,244,0.28); }
+  .form-input:focus, .form-select:focus, .form-textarea:focus {
+    border-color: rgba(196,144,128,0.6); background: rgba(255,255,255,0.09);
+  }
+  .form-select { cursor: pointer; color: rgba(250,248,244,0.5); }
+  .form-select option { background: var(--ink-mid); color: var(--cream); }
+  .form-textarea { resize: vertical; min-height: 88px; line-height: 1.6; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .form-submit {
+    width: 100%; background: var(--rose); color: var(--cream); border: none;
+    border-radius: 10px; padding: 16px; font-size: 15px; font-weight: 500;
+    font-family: var(--font-body); cursor: pointer;
+    transition: background 0.2s, transform 0.2s; margin-top: 8px;
+  }
+  .form-submit:hover { background: var(--rose-deep); transform: translateY(-1px); }
+  .form-note {
+    font-size: 12px; color: rgba(250,248,244,0.3); text-align: center;
+    margin-top: 14px; line-height: 1.5;
+  }
+
+  /* ── GOOGLE FORM IFRAME ── */
+  .gform-wrap {
+    background: var(--white);
+    border: 1px solid var(--cream-dark);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: var(--shadow-card);
+  }
+  .gform-header {
+    padding: 20px 24px 18px;
+    background: linear-gradient(135deg, var(--cream-mid), var(--cream));
+    border-bottom: 1px solid var(--cream-dark);
+    display: flex; align-items: center; gap: 12px;
+  }
+  .gform-header-avatar {
+    width: 38px; height: 38px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--blush), var(--sage-light));
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-display); font-size: 18px; font-weight: 500;
+    color: var(--rose-deep); flex-shrink: 0;
+  }
+  .gform-header-text {}
+  .gform-header-title { font-size: 14px; font-weight: 500; color: var(--ink); }
+  .gform-header-sub { font-size: 12px; color: var(--ink-muted); font-weight: 300; margin-top: 2px; }
+  .gform-wrap iframe {
+    display: block;
+    width: 100%;
+    border: none;
+  }
+  @media (max-width: 768px) {
+    .gform-wrap iframe { height: 980px; }
+  }
+
+  /* ── BETA TOP SECTION ── */
+  .beta-top { background: var(--white); border-bottom: 1px solid var(--cream-dark); }
+  .beta-top-inner {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start;
+  }
+  .signup-form-light {
+    background: var(--cream); border: 1px solid var(--cream-dark); border-radius: 24px; padding: 40px;
+  }
+  .form-label-dark {
+    color: var(--ink-muted) !important;
+  }
+  .form-input-light {
+    background: var(--white) !important;
+    border: 1px solid var(--cream-dark) !important;
+    color: var(--ink) !important;
+  }
+  .form-input-light::placeholder { color: var(--ink-muted) !important; }
+  .form-input-light:focus { border-color: var(--rose) !important; }
+  .form-select.form-input-light { color: var(--ink-soft) !important; }
+  .early-bullet::before {
+    background: rgba(196,144,128,0.15) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M6 10l3 3 5-5' stroke='%23C49080' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") center/cover;
+    border: 1px solid rgba(196,144,128,0.35);
+  }
+  @media (max-width: 768px) {
+    .beta-top-inner { grid-template-columns: 1fr; gap: 32px; }
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--cream-mid); padding: 52px 40px;
+    border-top: 1px solid var(--cream-dark);
+  }
+  .footer-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 24px;
+  }
+  .footer-logo {
+    font-family: var(--font-display); font-size: 22px; font-weight: 500;
+    color: var(--ink); text-decoration: none;
+  }
+  .footer-logo span { color: var(--rose); }
+  .footer-tagline { font-size: 13px; color: var(--ink-muted); margin-top: 4px; font-weight: 300; }
+  .footer-links { display: flex; gap: 28px; list-style: none; }
+  .footer-links a { font-size: 13px; color: var(--ink-muted); text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--ink); }
+  .footer-copy { font-size: 12px; color: var(--ink-muted); font-weight: 300; }
+  .footer-disclaimer {
+    max-width: 1100px; margin: 28px auto 0;
+    padding-top: 20px; border-top: 1px solid var(--cream-dark);
+    font-size: 12px; color: var(--ink-muted); font-weight: 300;
+    line-height: 1.6; text-align: center;
+  }
+
+  /* ── PRIVACY MODAL ── */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0; z-index: 1000;
+    background: rgba(44,33,24,0.55); backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    align-items: center; justify-content: center; padding: 24px;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: var(--cream); border-radius: 20px;
+    max-width: 760px; width: 100%; max-height: 88vh;
+    overflow: hidden; display: flex; flex-direction: column;
+    box-shadow: 0 24px 80px rgba(44,33,24,0.22);
+    animation: modalIn 0.3s cubic-bezier(0.25,0.46,0.45,0.94);
+  }
+  @keyframes modalIn { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
+  .modal-header {
+    padding: 28px 36px 20px;
+    border-bottom: 1px solid var(--cream-dark);
+    display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; flex-shrink: 0;
+  }
+  .modal-header h2 {
+    font-family: var(--font-display); font-size: 28px; font-weight: 400;
+    color: var(--ink); line-height: 1.2;
+  }
+  .modal-header h2 span { color: var(--rose); }
+  .modal-meta { font-size: 12px; color: var(--ink-muted); margin-top: 4px; font-weight: 300; }
+  .modal-close {
+    background: var(--cream-dark); border: none; border-radius: 50%;
+    width: 36px; height: 36px; cursor: pointer; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; color: var(--ink-soft); transition: background 0.2s;
+  }
+  .modal-close:hover { background: var(--blush); }
+  .modal-body {
+    padding: 28px 36px 36px; overflow-y: auto; flex: 1;
+    scrollbar-width: thin; scrollbar-color: var(--cream-dark) transparent;
+  }
+  .modal-body::-webkit-scrollbar { width: 6px; }
+  .modal-body::-webkit-scrollbar-thumb { background: var(--cream-dark); border-radius: 3px; }
+  .pp-section { margin-bottom: 28px; }
+  .pp-h2 {
+    font-family: var(--font-display); font-size: 18px; font-weight: 500;
+    color: var(--rose-deep); margin-bottom: 10px; margin-top: 24px;
+    padding-bottom: 6px; border-bottom: 1px solid var(--cream-dark);
+  }
+  .pp-h3 { font-size: 14px; font-weight: 500; color: var(--ink); margin: 14px 0 6px; }
+  .pp-p { font-size: 14px; color: var(--ink-soft); line-height: 1.75; margin-bottom: 10px; font-weight: 300; }
+  .pp-p strong { color: var(--ink); font-weight: 500; }
+  .pp-p em { font-style: italic; color: var(--rose-deep); }
+  .pp-ul { list-style: none; padding: 0; margin-bottom: 10px; }
+  .pp-ul li {
+    font-size: 14px; color: var(--ink-soft); line-height: 1.7;
+    padding: 4px 0 4px 18px; position: relative; font-weight: 300;
+  }
+  .pp-ul li::before {
+    content: '·'; position: absolute; left: 4px; color: var(--rose); font-weight: 700;
+  }
+  .pp-ul li strong { color: var(--ink); font-weight: 500; }
+  .pp-contact {
+    background: var(--cream-mid); border: 1px solid var(--cream-dark);
+    border-radius: 12px; padding: 16px 20px; margin-top: 8px;
+    font-size: 14px; color: var(--ink-soft);
+  }
+  .pp-contact a { color: var(--rose-deep); text-decoration: none; }
+  .pp-contact a:hover { text-decoration: underline; }
+  .pp-note {
+    background: rgba(196,144,128,0.08); border-left: 3px solid var(--rose);
+    border-radius: 0 10px 10px 0; padding: 12px 16px;
+    font-size: 13px; color: var(--ink-soft); font-style: italic;
+    line-height: 1.6; margin: 12px 0;
+  }
+  @media (max-width: 600px) {
+    .modal-header { padding: 20px 20px 16px; }
+    .modal-body { padding: 20px 20px 28px; }
+    .modal-header h2 { font-size: 22px; }
+    .modal-overlay { align-items: flex-start; padding: 72px 16px 24px; }
+    .modal { max-height: calc(100vh - 96px); }
+  }
+
+  /* ── SCROLL MARGIN — kompenzacija za sticky nav ── */
+  section[id], .beta-top, #google-form {
+    scroll-margin-top: 80px;
+  }
+  @media (max-width: 768px) {
+    section[id], .beta-top, #google-form {
+      scroll-margin-top: 120px;
+    }
+  }
+  .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay { transition-delay: 0.12s; }
+  .reveal-delay-2 { transition-delay: 0.22s; }
+
+  /* ── MOBILE NAV — scroll collapse ── */
+  .nav-link-hide {
+    transition: opacity 0.3s ease, max-width 0.4s ease, padding 0.3s ease;
+    max-width: 200px; overflow: hidden; white-space: nowrap;
+  }
+  nav.scrolled .nav-link-hide {
+    opacity: 0; max-width: 0; pointer-events: none; padding: 0;
+  }
+  nav.scrolled .nav-cta {
+    background: var(--rose) !important;
+    box-shadow: 0 4px 16px rgba(196,144,128,0.35) !important;
+  }
+
+  /* ── MOBILE ── */
+  @media (max-width: 768px) {
+    nav {
+      padding: 12px 20px;
+      flex-wrap: wrap;
+      row-gap: 0;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .nav-links {
+      display: flex;
+      order: 1;
+      width: 100%;
+      justify-content: flex-end;
+      gap: 24px;
+      margin: 10px 0 0 0;
+    }
+    nav.scrolled .nav-links { display: none; }
+    nav.scrolled .nav-link-hide { display: none !important; }
+    .hero { padding: 100px 20px 60px; }
+    .hero-inner { grid-template-columns: 1fr; gap: 48px; }
+    .hero-visual { order: -1; }
+    section { padding: 70px 20px; }
+    .features-grid { grid-template-columns: 1fr; }
+    .testimonials-grid { grid-template-columns: 1fr; }
+    .early-access-inner { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    .footer-inner { flex-direction: column; align-items: flex-start; }
+    .features-header { flex-direction: column; }
+    .for-intro { grid-template-columns: 1fr; gap: 32px; }
+    .tag-1, .tag-2 { display: none; }
+    .conv-tabs { justify-content: flex-start; overflow-x: auto; padding-bottom: 4px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- AI TRANSPARENCY BANNER -->
+<div class="ai-banner">
+  <strong>Julija AI je veštačka inteligencija</strong> — nije terapeut, psiholog niti stvarna osoba. Razgovori su poverljivi.
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Julija <span>AI</span></a>
+  <ul class="nav-links">
+    <li class="nav-link-hide"><a href="#kako-funkcionise">Kako funkcioniše</a></li>
+    <li class="nav-link-hide"><a href="#razgovor">Primeri razgovora</a></li>
+  </ul>
+  <a href="#google-form" class="nav-cta">Prijavi se za beta</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-inner">
+    <div>
+      <div class="hero-eyebrow">Rani beta · Ograničen broj mesta</div>
+      <h1>Nekada ti ne treba samo savet. Treba ti neko ko te stvarno <em>razume.</em></h1>
+      <p class="hero-sub">Julija AI je alat za emotivnu podršku i bolje razumevanje sebe, svojih odnosa sa drugima i obrazaca koji ti se možda ponavljaju u životu.</p>
+      <div class="hero-actions">
+        <a href="#google-form" class="btn-primary">Prijavi se za rani pristup</a>
+        <a href="#razgovor" class="btn-secondary">Pogledaj kako izgleda razgovor</a>
+      </div>
+    </div>
+    <div class="hero-visual reveal">
+      <div class="floating-tag tag-1"><div class="tag-dot" style="background:var(--sage)"></div> Emocionalno inteligentna</div>
+      <div class="floating-tag tag-2"><div class="tag-dot" style="background:var(--rose)"></div> Dostupna u svakom trenutku</div>
+      <div class="chat-card">
+        <div class="chat-header">
+          <div class="avatar">J</div>
+          <div>
+            <div class="chat-name">Julija AI</div>
+            <div class="chat-status">Tu je za tebe</div>
+          </div>
+        </div>
+        <div class="message user">
+          <div class="bubble">On mi je kao droga. Znam da nije dobro, ali ne mogu da prestanem.</div>
+        </div>
+        <div class="message julija">
+          <div class="bubble">To što kažeš — da je on kao droga — to je važno. To nije samo ljubav. To je zavisnost. Deluje mi da si upala u ciklus bola, nade, kratkog olakšanja i ponovnog bola.</div>
+        </div>
+        <div class="message user">
+          <div class="bubble">Tačno. I svaki put se vraćam...</div>
+        </div>
+        <div class="message julija">
+          <div class="typing-indicator">
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BETA SIGNUP FORM — TOP -->
+<section class="beta-top" id="beta-forma">
+  <div class="section-inner">
+    <div class="beta-top-inner">
+      <div class="reveal">
+        <div class="section-label">Rani pristup · Ograničen broj mesta</div>
+        <h2 class="section-title">Budi deo nečeg <em>stvarnog.</em></h2>
+        <div class="divider"></div>
+        <p class="section-subtitle">Tražimo prve korisnike koji žele da testiraju Juliju AI i pomognu nam da napravimo AI koji zaista razume ljude sa naših prostora.</p>
+        <div class="early-bullets" style="margin-top:28px;">
+          <div class="early-bullet" style="color:var(--ink-soft);">Potpun besplatan pristup svim funkcijama tokom cele bete</div>
+          <div class="early-bullet" style="color:var(--ink-soft);">Tvoj feedback direktno oblikuje razvoj proizvoda</div>
+          <div class="early-bullet" style="color:var(--ink-soft);">Postaneš deo malog kruga ljudi koji grade nešto novo</div>
+          <div class="early-bullet" style="color:var(--ink-soft);">Razgovori su privatni i nikada se ne dele</div>
+        </div>
+        <p style="margin-top:20px; font-size:14px; color:var(--ink-muted); font-weight:300; line-height:1.7;">Beta korisnici imaju privilegovan pristup koji nije dostupan javnosti — i svaki razgovor koji povedeš direktno utiče na to kakav alat za emotivnu podršku dobijaju ljudi na ovim prostorima.</p>
+      </div>
+      <div class="reveal reveal-delay">
+        <div class="gform-wrap" id="google-form">
+          <div class="gform-header">
+            <div class="gform-header-avatar">J</div>
+            <div class="gform-header-text">
+              <div class="gform-header-title">Prijava za beta pristup</div>
+              <div class="gform-header-sub">Julija AI · Ograničen broj mesta</div>
+            </div>
+          </div>
+          <iframe
+            src="https://docs.google.com/forms/d/e/1FAIpQLSc8FTY7HL1BYuxknQR-kLbk4sOeUCT2mzo6q0Q0aZezgBta5A/viewform?embedded=true"
+            width="100%"
+            height="900"
+            frameborder="0"
+            marginheight="0"
+            marginwidth="0"
+            title="Julija AI — Prijava za beta pristup"
+            loading="lazy">
+            Učitava se…
+          </iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section class="problem">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="section-label">Zašto smo tu</div>
+      <h2 class="section-title">Zašto se toliko nas oseća <em>neshvaćeno?</em></h2>
+      <div class="divider" style="background: linear-gradient(90deg, var(--blush-mid), transparent);"></div>
+      <p class="problem-text">
+        <strong>Prijatelji nas vole, ali nas retko zaista razumeju.</strong><br>
+        Terapija nije uvek dostupna kada nam je najpotrebnija.<br>
+        A većina AI alata zvuči generički, hladno — kao da čita psihološki priručnik.<br><br>
+        Nekada nam ne treba dijagnoza.<br>
+        <em>Treba nam prostor da razumemo sebe.</em>
+      </p>
+    </div>
+    <div class="problem-grid reveal">
+      <div class="problem-card">
+        <span class="problem-icon">👥</span>
+        <h3>Prijatelji nas vole, ali su pristrasni</h3>
+        <p>Žele da te zaštite — što znači da ti retko mogu dati iskrenu, neutralnu perspektivu o tebi i tvojim situacijama.</p>
+      </div>
+      <div class="problem-card">
+        <span class="problem-icon">🛋️</span>
+        <h3>Terapija ima praznine</h3>
+        <p>Seansa je jednom nedeljno. Život ne čeka. Trenuci između seansi mogu biti najteži — i najusamljeniji.</p>
+      </div>
+      <div class="problem-card">
+        <span class="problem-icon">🤖</span>
+        <h3>Generički AI ostavlja hladan osećaj</h3>
+        <p>ChatGPT daje odgovore. Ali nema toplinu, nema kulturno razumevanje, nema pravo prisustvo. Osećaš da razgovaraš sa algoritmom.</p>
+      </div>
+      <div class="problem-card">
+        <span class="problem-icon">🌍</span>
+        <h3>Alati nisu pravljeni za nas</h3>
+        <p>Balkanske porodice, veze i emocionalni jezik su specifični. Većina alata je napravljena za nekoga drugog, na drugom mestu.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-section" id="kako-funkcionise">
+  <div class="section-inner">
+    <div class="reveal" style="text-align:center; max-width:560px; margin:0 auto;">
+      <div class="section-label">Kako funkcioniše</div>
+      <h2 class="section-title">Počni razgovor za <em>manje od minut.</em></h2>
+    </div>
+    <div class="steps-grid reveal">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h3>Reci šta te muči</h3>
+        <p>Nema registracije, nema formulara. Samo napišeš šta ti je na umu — u bilo kom momentu dana ili noći.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h3>Julija AI sluša</h3>
+        <p>Razume te, saoseća sa tobom i pomaže ti da razumeš sebe ili situaciju u kojoj se nalaziš — bez osude i bez brzih zaključaka.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h3>Vidiš stvari jasnije</h3>
+        <p>Bolje razumeš šta osećaš, zašto se to ponavlja i šta ti je zapravo potrebno.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features">
+  <div class="section-inner">
+    <div class="features-header reveal">
+      <div>
+        <div class="section-label">Zašto je Julija drugačija</div>
+        <h2 class="section-title">Napravljena za ono što <em>zaista osećaš.</em></h2>
+      </div>
+      <p class="section-subtitle">Julija AI nije terapeut i ne pokušava to da bude. Ona je emotivno inteligentna podrška koja te prati u trenucima kada ti je najpotrebnija — bez čekanja, bez zakazivanja, bez osude.</p>
+    </div>
+    <div class="features-grid reveal">
+      <div class="feature-card">
+        <div class="feature-tags">
+          <span class="ftag">Breadcrumbing</span>
+          <span class="ftag">Ghosting</span>
+          <span class="ftag">Love bombing</span>
+          <span class="ftag">Raskidi</span>
+          <span class="ftag">Ljubomora</span>
+        </div>
+        <h3>Odnosi i ljubav</h3>
+        <p>Opsesivne veze, izbegavajući partneri, toksični obrasci, ciklusi bola i nade — Julija razume dinamiku odnosa bez osuđivanja i bez brzih zaključaka.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-tags">
+          <span class="ftag">Health anxiety</span>
+          <span class="ftag">Overthinking</span>
+          <span class="ftag">Kontrola</span>
+          <span class="ftag">Katastrofizacija</span>
+        </div>
+        <h3>Anksioznost i overthinking</h3>
+        <p>Strah od budućnosti, katastrofični scenariji, potreba za kontrolom — Julija pomaže da usporiš, imenuje šta se dešava i nađeš malo više jasnoće.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-tags">
+          <span class="ftag">Perfekcionizam</span>
+          <span class="ftag">Impostor sindrom</span>
+          <span class="ftag">Validacija</span>
+        </div>
+        <h3>Samopouzdanje i vrednovanje sebe</h3>
+        <p>Osećaj da nikad nisi dovoljno dobar/a, strah od prosečnosti, potreba za spoljnim odobravanjem — Julija pomaže da se vratiš sebi bez praznih pohvala.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-tags">
+          <span class="ftag">Emotional loneliness</span>
+          <span class="ftag">Nepripadanje</span>
+          <span class="ftag">Vidljivost</span>
+        </div>
+        <h3>Usamljenost i povezanost</h3>
+        <p>Okružen/a si ljudima, ali se ne osećaš viđeno. Emotional loneliness — osećaj da niko zapravo ne razume šta se dešava unutra.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-tags">
+          <span class="ftag">Krivica</span>
+          <span class="ftag">Kritika</span>
+          <span class="ftag">Odobravanje roditelja</span>
+        </div>
+        <h3>Porodica i obrasci</h3>
+        <p>Emotivno nezreli roditelji, generacijski obrasci, krivica, kritika — Julija pomaže da razumeš dinamiku a da se ne ugušiš u njoj.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-tags">
+          <span class="ftag">Burnout</span>
+          <span class="ftag">Kriza smisla</span>
+          <span class="ftag">Identitet</span>
+        </div>
+        <h3>Životne krize i identitet</h3>
+        <p>Burnout, strah od starenja, vidljivosti, uspeha i neuspeha, kriza smisla — trenuci kada se pitaš ko si i šta zapravo hoćeš od svog života.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRIVACY -->
+<section class="privacy-section">
+  <div class="section-inner">
+    <div class="reveal" style="text-align:center; max-width:560px; margin:0 auto 0;">
+      <div class="section-label">Privatnost</div>
+      <h2 class="section-title">Ono što kažeš, <em>ostaje ovde.</em></h2>
+      <div class="divider" style="margin: 20px auto 0;"></div>
+    </div>
+    <div class="privacy-grid reveal">
+      <div class="privacy-card">
+        <span class="privacy-icon">🔒</span>
+        <h3>Ne delimo sa trećim stranama</h3>
+        <p>Razgovori se nikad ne prodaju, ne dele sa oglašivačima niti ne koriste van poboljšanja samog proizvoda.</p>
+      </div>
+      <div class="privacy-card">
+        <span class="privacy-icon">🤖</span>
+        <h3>Razgovaraš sa AI</h3>
+        <p>Julija AI je veštačka inteligencija — nije osoba. Nema tima koji čita tvoje poruke u realnom vremenu.</p>
+      </div>
+      <div class="privacy-card">
+        <span class="privacy-icon">🛡️</span>
+        <h3>Sigurnost podataka</h3>
+        <p>Razgovori su enkriptovani. Možeš ih obrisati u bilo kom trenutku. Tvoja privatnost nije kompromis.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONVERSATIONS -->
+<section class="conversation-section" id="razgovor">
+  <div class="section-inner">
+    <div class="conversation-header reveal">
+      <div class="section-label">Pravi razgovori</div>
+      <h2 class="section-title">Ovako izgleda kada te neko <em>zaista čuje.</em></h2>
+      <p class="section-subtitle">Ovo su stvarni primeri razgovora — onakvi kakvi zaista postoje, sa svom svojom složenošću.</p>
+      <div class="conv-tabs">
+        <button class="conv-tab active" onclick="switchTab('veza', this)">Veza i zavisnost</button>
+        <button class="conv-tab" onclick="switchTab('uspeh', this)">Uspeh i vrednovanje sebe</button>
+        <button class="conv-tab" onclick="switchTab('vidljivost', this)">Strah od vidljivosti</button>
+        <button class="conv-tab" onclick="switchTab('health', this)">Health anxiety</button>
+      </div>
+    </div>
+    <div class="conv-panels">
+
+      <div class="conv-panel active" id="panel-veza">
+        <div class="conv-topic">Odnosi · Emocionalna zavisnost</div>
+        <div class="conv-msg user">
+          <div class="conv-avatar user-av">Ti</div>
+          <div class="conv-bubble">On mi je kao droga.</div>
+        </div>
+        <div class="conv-msg">
+          <div class="conv-avatar julija-av">J</div>
+          <div class="conv-bubble">To što kažeš — da je on kao droga — to je važno. To nije samo ljubav. To je zavisnost. Deluje mi da si upala u ciklus bola, nade, kratkog olakšanja i ponovnog bola.</div>
+        </div>
+        <div class="conv-insight">
+          Julija ne govori ti da ga ostaviš. Ona te pomaže da razumeš šta se zapravo dešava — iznutra.
+        </div>
+      </div>
+
+      <div class="conv-panel" id="panel-uspeh">
+        <div class="conv-topic">Vrednovanje sebe · Impostor sindrom</div>
+        <div class="conv-msg user">
+          <div class="conv-avatar user-av">Ti</div>
+          <div class="conv-bubble">Kolike god da imam uspehe, ne mogu da ih internalizujem.</div>
+        </div>
+        <div class="conv-msg">
+          <div class="conv-avatar julija-av">J</div>
+          <div class="conv-bubble">Kao da uspeh nikada ne ostane sa tobom dovoljno dugo da ga zaista osetiš. Vrlo brzo postane normalan i pojavljuje se pitanje: "Dobro, šta je sledeće?"</div>
+        </div>
+        <div class="conv-insight">
+          Julija ne nudi praznu pohvalu. Pomaže ti da razumeš zašto se to dešava — i šta stoji iza toga.
+        </div>
+      </div>
+
+      <div class="conv-panel" id="panel-vidljivost">
+        <div class="conv-topic">Identitet · Strah od uspeha</div>
+        <div class="conv-msg user">
+          <div class="conv-avatar user-av">Ti</div>
+          <div class="conv-bubble">Želim uspeh ali me istovremeno plaši da budem vidljiva.</div>
+        </div>
+        <div class="conv-msg">
+          <div class="conv-avatar julija-av">J</div>
+          <div class="conv-bubble">Ne zvuči mi kao da se plašiš uspeha. Više kao da se plašiš izloženosti koja dolazi sa njim.</div>
+        </div>
+        <div class="conv-insight">
+          Jedna rečenica koja menja perspektivu — bez savetovanja, bez brzih zaključaka. Samo jasnoća.
+        </div>
+      </div>
+
+      <div class="conv-panel" id="panel-health">
+        <div class="conv-topic">Anksioznost · Health anxiety</div>
+        <div class="conv-msg user">
+          <div class="conv-avatar user-av">Ti</div>
+          <div class="conv-bubble">Svaki simptom odmah povezujem sa nekom ozbiljnom bolešću.</div>
+        </div>
+        <div class="conv-msg">
+          <div class="conv-avatar julija-av">J</div>
+          <div class="conv-bubble">Zanimljivo je da te pregledi smire — ali samo privremeno. To često znači da problem nije samo u simptomu, već u alarmu koji se aktivira oko njega.</div>
+        </div>
+        <div class="conv-insight">
+          Julija ne dijagnostikuje. Pomaže ti da razumeš sopstveni obrazac — i zašto se ponavlja.
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- WHO IT'S FOR -->
+<section class="for-section" id="za-koga">
+  <div class="section-inner">
+    <div class="for-intro reveal">
+      <div>
+        <div class="section-label">Za koga je Julija</div>
+        <h2 class="section-title">Ne moraš biti u <em>krizi</em> da bi ti bila potrebna podrška.</h2>
+        <div class="divider"></div>
+        <p class="section-subtitle">Julija AI je za svakodnevne trenutke — kada ti treba neko da misli zajedno sa tobom, bez osude, bez žurbe.</p>
+      </div>
+      <div class="tag-cloud">
+        <span class="topic-tag highlight">Anksioznost</span>
+        <span class="topic-tag highlight">Overthinking</span>
+        <span class="topic-tag">Health anxiety</span>
+        <span class="topic-tag highlight">Usamljenost</span>
+        <span class="topic-tag">Breadcrumbing</span>
+        <span class="topic-tag">Ghosting</span>
+        <span class="topic-tag">Love bombing</span>
+        <span class="topic-tag highlight">Toksične veze</span>
+        <span class="topic-tag">Ljubomora</span>
+        <span class="topic-tag">Opsesivne veze</span>
+        <span class="topic-tag highlight">Raskidi</span>
+        <span class="topic-tag highlight">Problemi sa vrednovanjem sebe</span>
+        <span class="topic-tag">Perfekcionizam</span>
+        <span class="topic-tag highlight">Impostor sindrom</span>
+        <span class="topic-tag">Strah od neuspeha</span>
+        <span class="topic-tag">Strah od uspeha</span>
+        <span class="topic-tag">Strah od vidljivosti</span>
+        <span class="topic-tag highlight">Burnout</span>
+        <span class="topic-tag">Kriza identiteta</span>
+        <span class="topic-tag">Kriza smisla</span>
+        <span class="topic-tag">Emotivna usamljenost</span>
+        <span class="topic-tag highlight">Problemi sa roditeljima</span>
+        <span class="topic-tag">Potreba za validacijom</span>
+        <span class="topic-tag">Strah od odbacivanja</span>
+        <span class="topic-tag">Potreba za kontrolom</span>
+        <span class="topic-tag highlight">Životne tranzicije</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+  <div class="section-inner">
+    <div class="testimonials-header reveal">
+      <div class="beta-badge">Glasovi iz beta testiranja</div>
+      <h2 class="section-title">Šta kažu prvi <em>korisnici.</em></h2>
+      <p class="section-subtitle">Ovo su stvarni utisci ljudi koji su testirali Juliju AI tokom zatvorene alfa faze. Imena su promenjena radi privatnosti.</p>
+    </div>
+    <div class="testimonials-grid reveal">
+      <div class="testimonial-card">
+        <p class="testimonial-text">Napokon nešto gde nemam osećaj da razgovaram sa robotom. Pratila je šta sam joj pričala i nije mi nudila robotska rešenja.</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">
+            <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="" aria-hidden="true">
+          </div>
+          <div>
+            <div class="author-name">Marija, 31</div>
+            <div class="author-detail">Beograd · Odnosi u vezi</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <p class="testimonial-text">Dopisivao sam se sa njom u 2 ujutru kada nisam mogao da spavam. Nije mi davala gomilu saveta nego mi je postavila pitanje koje je pogodilo pravo u centar.</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">
+            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="" aria-hidden="true">
+          </div>
+          <div>
+            <div class="author-name">Nikola, 38</div>
+            <div class="author-detail">Novi Sad · Anksioznost i burnout</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <p class="testimonial-text">Odmah je razumela šta mi se dešava u porodici, nisam morala ni da objašnjavam. Fenomenalan alat.</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">
+            <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="" aria-hidden="true">
+          </div>
+          <div>
+            <div class="author-name">Ana, 27</div>
+            <div class="author-detail">Zagreb · Porodični obrasci</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <p class="testimonial-text">Nisam bio siguran šta da očekujem od AI-a za emotivnu podršku, pogotovo za Balkan. Ali top je što se neko ovoga dosetio, stvarno znači — pogotovo za nas muškarce.</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">
+            <img src="https://randomuser.me/api/portraits/men/15.jpg" alt="" aria-hidden="true">
+          </div>
+          <div>
+            <div class="author-name">Stefan, 24</div>
+            <div class="author-detail">Beograd · Samopouzdanje i identitet</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <p class="testimonial-text">Živim u inostranstvu i nekad se osećam kao da niko ne razume kakve probleme imam. Svi misle da je ovde bolje i da smo svi srećni. Napokon mogu da pričam sa nekim ko me razume i ne osuđuje.</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">
+            <img src="https://randomuser.me/api/portraits/women/55.jpg" alt="" aria-hidden="true">
+          </div>
+          <div>
+            <div class="author-name">Milica, 35</div>
+            <div class="author-detail">Beč · Burnout i životne tranzicije</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <p class="testimonial-text">Od kad znam za sebe overthinkujem i to je toliko naporno. Nikada nisam znala zašto to radim. Julija AI mi je pomogla da shvatim.</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">
+            <img src="https://randomuser.me/api/portraits/women/73.jpg" alt="" aria-hidden="true">
+          </div>
+          <div>
+            <div class="author-name">Jovana, 29</div>
+            <div class="author-detail">Niš · Anksioznost i overthinking</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <a href="#" class="footer-logo">Julija <span>AI</span></a>
+      <p class="footer-tagline">Emotivna podrška i bolje razumevanje sebe.</p>
+    </div>
+    <ul class="footer-links">
+      <li><a href="#kako-funkcionise">Kako funkcioniše</a></li>
+      <li><a href="#" onclick="openPrivacy(event)">Privacy Policy</a></li>
+      <li><a href="#" onclick="openToS(event)">Terms of Service</a></li>
+      <li><a href="mailto:stanojevicjulija@gmail.com">Kontakt</a></li>
+    </ul>
+    <p class="footer-copy">© 2026 Julija AI. Sva prava zadržana.</p>
+  </div>
+  <div class="footer-disclaimer">
+    Julija AI pruža emotivnu podršku i alate za samorefleksiju. Nije zamena za licenciranog psihologa, psihoterapeuta, psihijatra niti za hitne službe. U slučaju krize pozovi SOS Centar Srce: <strong>0800 300 303</strong> (svaki dan 14:00–23:00) ili Hitnu pomoć: <strong>194</strong>.
+  </div>
+</footer>
+
+<!-- TERMS OF SERVICE MODAL -->
+<div class="modal-overlay" id="tosModal" onclick="closeToSOutside(event)">
+  <div class="modal">
+    <div class="modal-header">
+      <div>
+        <h2>Terms of Service · <span>Julija AI</span></h2>
+        <div class="modal-meta">Version 1.0 · Effective date: June 20, 2026 · Applies to: Julija AI beta platform</div>
+      </div>
+      <button class="modal-close" onclick="closeToS()" aria-label="Close">×</button>
+    </div>
+    <div class="modal-body">
+
+      <p class="pp-p">By accessing or using Julija AI, you agree to these Terms of Service. If you do not agree, please do not use the platform. These Terms should be read together with our Privacy Policy.</p>
+
+      <div class="pp-h2">1. Acceptance of Terms</div>
+      <p class="pp-p">By creating an account or using Julija AI, you confirm that you are 18 years of age or older, that you have read and agree to these Terms, and that you are using the service for personal, non-commercial purposes.</p>
+      <p class="pp-p">If you are under 18, you are not permitted to use Julija AI.</p>
+
+      <div class="pp-h2">2. What Julija AI is</div>
+      <p class="pp-p">Julija AI is an AI-powered emotional support companion designed to help you explore your emotions, reflect on your experiences, and develop greater self-understanding. It is intended for emotional support, self-reflection, and personal growth only — as a complement to, not a replacement for, professional mental health care.</p>
+
+      <div class="pp-h2">3. Medical and clinical limitations</div>
+      <div class="pp-note" style="font-style:normal; color:var(--ink); border-left-color: var(--rose-deep);">
+        <strong>IMPORTANT:</strong> Julija AI is not a medical device and does not provide medical advice, diagnosis, psychotherapy, or treatment. It is not intended to diagnose, treat, cure, or prevent any disease or mental health condition.
+      </div>
+      <p class="pp-p" style="margin-top:12px;">Julija AI will NOT:</p>
+      <ul class="pp-ul">
+        <li>Provide diagnoses of any mental health condition or disorder</li>
+        <li>Determine, recommend, or modify any course of therapy or treatment</li>
+        <li>Assess the severity of any mental health condition</li>
+        <li>Provide medical advice or medical recommendations of any kind</li>
+        <li>Replace or modify any prescribed medication or treatment plan</li>
+        <li>Assess risk of disease, self-harm, or suicide with clinical accuracy</li>
+        <li>Act as a substitute for a licensed psychologist, psychotherapist, psychiatrist, or physician</li>
+      </ul>
+      <p class="pp-p">If you are experiencing a mental health crisis or believe you require professional care, please contact a qualified healthcare provider or emergency services immediately.</p>
+      <div class="pp-contact">Serbia crisis line: SOS Centar Srce <strong>0800 300 303</strong> (daily 14:00–23:00) · Emergency: <strong>194</strong></div>
+
+      <div class="pp-h2">4. Beta service</div>
+      <p class="pp-p">Julija AI is currently in beta. The service is provided for testing and feedback purposes. Features, responses, and availability may change without notice. The service may contain errors or unexpected behaviour. We may modify, suspend, or discontinue the service at any time. Beta access is provided free of charge.</p>
+
+      <div class="pp-h2">5. Your responsibilities</div>
+      <ul class="pp-ul">
+        <li>Use the service only for lawful purposes</li>
+        <li>Do not attempt to misuse, hack, or disrupt the platform</li>
+        <li>Do not use the service to harass, harm, or threaten others</li>
+        <li>Do not use the service to generate illegal, hateful, or abusive content</li>
+        <li>Seek professional help when needed and do not rely solely on Julija AI for mental health support</li>
+      </ul>
+
+      <div class="pp-h2">6. Crisis situations</div>
+      <p class="pp-p">Julija AI includes basic safety protocols to recognise potential crisis situations and provide resources. However, Julija AI cannot call emergency services on your behalf, cannot guarantee it will correctly identify every crisis situation, and is not a substitute for crisis intervention by trained professionals.</p>
+      <p class="pp-p">If you or someone you know is in immediate danger, contact emergency services immediately.</p>
+
+      <div class="pp-h2">7. Intellectual property</div>
+      <p class="pp-p">All content, design, code, and AI systems comprising Julija AI are the intellectual property of Julija AI or its licensors. The content of your conversations belongs to you. By using the service, you grant Julija AI a limited licence to process and store your conversation content solely for the purposes described in our Privacy Policy.</p>
+
+      <div class="pp-h2">8. Disclaimer of warranties</div>
+      <p class="pp-p">Julija AI is provided "as is" without warranties of any kind. We do not warrant that the service will be uninterrupted or error-free, that AI responses will be accurate or appropriate for your situation, or that the service will meet your specific needs.</p>
+
+      <div class="pp-h2">9. Limitation of liability</div>
+      <p class="pp-p">To the maximum extent permitted by law, Julija AI shall not be liable for any indirect or consequential damages, any harm arising from reliance on AI-generated content, or any harm arising from failure to seek professional mental health or medical care.</p>
+
+      <div class="pp-h2">10. Account termination</div>
+      <p class="pp-p">You may delete your account at any time. We reserve the right to suspend or terminate your account if you violate these Terms or abuse the service.</p>
+
+      <div class="pp-h2">11. Changes to these Terms</div>
+      <p class="pp-p">We may update these Terms from time to time. We will notify you of significant changes via email at least 14 days before they take effect.</p>
+
+      <div class="pp-h2">12. Governing law</div>
+      <p class="pp-p">These Terms are governed by the laws of the Republic of Serbia.</p>
+
+      <div class="pp-h2">13. Contact</div>
+      <div class="pp-contact">Questions about these Terms: <a href="mailto:stanojevicjulija@gmail.com">stanojevicjulija@gmail.com</a> — We respond within 30 days.</div>
+
+    </div>
+  </div>
+</div>
+
+
+<div class="modal-overlay" id="privacyModal" onclick="closePrivacyOutside(event)">
+  <div class="modal">
+    <div class="modal-header">
+      <div>
+        <h2>Privacy Policy · <span>Julija AI</span></h2>
+        <div class="modal-meta">Version 1.0 · Effective date: June 20, 2026 · Applies to: Julija AI beta platform</div>
+      </div>
+      <button class="modal-close" onclick="closePrivacy()" aria-label="Close">×</button>
+    </div>
+    <div class="modal-body">
+
+      <div class="pp-section">
+        <p class="pp-p">Julija AI is a platform for emotional support and self-understanding. This Privacy Policy explains what data we collect, why we collect it, how we protect it, and what your rights are.</p>
+        <p class="pp-p">We understand that the topics you may discuss with Julija AI — relationships, anxiety, self-worth, family — fall into the category of sensitive personal data. That is precisely why privacy is not a formality for us, but the foundation on which this product is built.</p>
+      </div>
+
+      <div class="pp-h2">1. Who we are and how to contact us</div>
+      <p class="pp-p">The data controller within the meaning of the General Data Protection Regulation (GDPR) and applicable Serbian data protection law is Julija AI.</p>
+      <div class="pp-contact">For all questions, requests, or complaints regarding your personal data: <a href="mailto:stanojevicjulija@gmail.com">stanojevicjulija@gmail.com</a> — We respond within 30 days.</div>
+
+      <div class="pp-h2">2. What data we collect</div>
+      <div class="pp-h3">2.1 Data you provide directly</div>
+      <ul class="pp-ul">
+        <li>Email address (required — for account creation and communication)</li>
+        <li>Age group (for age verification purposes)</li>
+        <li>Conversation content with Julija AI (messages exchanged during sessions)</li>
+        <li>Optional response to the question about topics of interest (at beta sign-up)</li>
+      </ul>
+      <div class="pp-h3">2.2 Data generated automatically</div>
+      <ul class="pp-ul">
+        <li>Date and time of conversations</li>
+        <li>Session duration</li>
+        <li>Technical data about your device and browser (browser type, operating system)</li>
+        <li>Message count and processing costs (internal, for platform management)</li>
+      </ul>
+      <div class="pp-h3">2.3 What we do NOT collect</div>
+      <ul class="pp-ul">
+        <li>Full name</li>
+        <li>National identification number, ID card or passport number</li>
+        <li>Home address · Phone number · Date of birth · Financial data · Location data</li>
+      </ul>
+
+      <div class="pp-h2">3. Special categories of personal data</div>
+      <p class="pp-p">Conversations you have with Julija AI may contain information about mental health, emotional state, relationships, and other sensitive topics. Under GDPR (Article 9), such data constitutes a <strong>special category of personal data</strong> requiring a higher level of protection.</p>
+      <p class="pp-p">We process such data exclusively on the basis of your explicit consent, provided at registration. You may withdraw consent at any time. We will never use sensitive data from conversations for profiling, advertising, or sharing with third parties without your explicit consent.</p>
+
+      <div class="pp-h2">4. Legal basis for processing</div>
+      <ul class="pp-ul">
+        <li><strong>Consent (GDPR Art. 6(1)(a), Art. 9(2)(a)):</strong> Processing of conversation content and special categories of data.</li>
+        <li><strong>Performance of a contract (GDPR Art. 6(1)(b)):</strong> Processing of email address and technical data necessary to provide the service.</li>
+        <li><strong>Legitimate interests (GDPR Art. 6(1)(f)):</strong> Aggregated statistical data for platform improvement and security.</li>
+      </ul>
+
+      <div class="pp-h2">5. Purpose of data processing</div>
+      <ul class="pp-ul">
+        <li>Providing the emotional support service through Julija AI</li>
+        <li>Creating and managing your user account</li>
+        <li>Platform security and abuse prevention</li>
+        <li>Improving the quality of the platform and user experience, including internal review of conversations by authorised personnel</li>
+        <li>Crisis support — identifying situations that may require emergency assistance</li>
+        <li>Communication regarding the platform (technical changes, Privacy Policy updates)</li>
+      </ul>
+      <div class="pp-note">We NEVER use conversations to train AI models without your explicit consent. We do not currently train any model on user data.</div>
+
+      <div class="pp-h2">6. Who has access to your data</div>
+      <div class="pp-h3">6.1 Internal access</div>
+      <p class="pp-p">Access to data is limited to the platform founder, solely for the purposes of technical development and product improvement during the beta phase. Conversation content is not read for the purpose of personal monitoring of individual users.</p>
+      <div class="pp-h3">6.2 Data processors (third parties)</div>
+      <ul class="pp-ul">
+        <li><strong>Anthropic (Claude API):</strong> Processing of conversation text through the AI model. Anthropic does not use API customer data to train its models. See anthropic.com/privacy.</li>
+        <li><strong>Voiceflow:</strong> Platform for building and hosting the conversational flow. See voiceflow.com/privacy.</li>
+      </ul>
+      <div class="pp-h3">6.3 Data transfers outside the EU</div>
+      <p class="pp-p">Anthropic and Voiceflow are US-based services. Data transfers to the United States are carried out with appropriate safeguards in accordance with GDPR, including Standard Contractual Clauses. We do not sell, rent, or share your data with advertisers or data brokers.</p>
+
+      <div class="pp-h2">7. How long we retain data</div>
+      <ul class="pp-ul">
+        <li><strong>Account and email address:</strong> Until the account is deleted by the user.</li>
+        <li><strong>Conversation content:</strong> Until the account is deleted or consent is withdrawn, whichever comes first.</li>
+        <li><strong>Technical logs:</strong> Maximum 90 days, then deleted or anonymised.</li>
+        <li><strong>Aggregated statistical data:</strong> May be retained indefinitely in anonymised form only.</li>
+      </ul>
+
+      <div class="pp-h2">8. Right to erasure</div>
+      <p class="pp-p">You may request deletion of all your data at any time — conversations, email address, and all other personal data. We will delete everything within 30 days and send you confirmation.</p>
+      <div class="pp-contact">Request deletion at: <a href="mailto:stanojevicjulija@gmail.com">stanojevicjulija@gmail.com</a></div>
+
+      <div class="pp-h2">9. Your rights</div>
+      <ul class="pp-ul">
+        <li><strong>Right of access</strong> — request a copy of all data we hold about you</li>
+        <li><strong>Right to rectification</strong> — request correction of inaccurate data</li>
+        <li><strong>Right to erasure</strong> — request deletion of all your data</li>
+        <li><strong>Right to restriction of processing</strong> — request a temporary restriction on processing</li>
+        <li><strong>Right to data portability</strong> — request your data in a machine-readable format</li>
+        <li><strong>Right to object</strong> — object to processing based on legitimate interests</li>
+        <li><strong>Right to withdraw consent</strong> — withdraw consent for special categories at any time</li>
+      </ul>
+
+      <div class="pp-h2">10. Right to lodge a complaint</div>
+      <ul class="pp-ul">
+        <li><strong>Serbia:</strong> Commissioner for Information of Public Importance and Personal Data Protection (poverenik.rs)</li>
+        <li><strong>EU:</strong> The data protection supervisory authority in your country of residence.</li>
+      </ul>
+
+      <div class="pp-h2">11. Data security</div>
+      <ul class="pp-ul">
+        <li>Encryption of data in transit (HTTPS/TLS)</li>
+        <li>Restricted access to data (principle of least privilege)</li>
+        <li>Regular security reviews</li>
+        <li>In the event of a security incident we will notify you within 72 hours</li>
+      </ul>
+
+      <div class="pp-h2">12. Minors</div>
+      <p class="pp-p">Julija AI is intended for users aged 18 and over. If you indicate that you are under 18, access to the platform will be restricted. If we become aware that we have inadvertently collected data from a minor, we will delete such data without delay.</p>
+
+      <div class="pp-h2">13. Cookies</div>
+      <p class="pp-p">Julija AI uses only technical session cookies necessary for the platform to function. We do not use tracking cookies, third-party analytics, or advertising cookies.</p>
+
+      <div class="pp-h2">14. Changes to this Privacy Policy</div>
+      <p class="pp-p">We may update this Privacy Policy from time to time. We will notify you of significant changes via email at least 14 days before they take effect. The date of the most recent update is always visible at the top of this document.</p>
+
+      <div class="pp-h2">15. Contact</div>
+      <div class="pp-contact">For all questions regarding this Privacy Policy: <a href="mailto:stanojevicjulija@gmail.com">stanojevicjulija@gmail.com</a> — We respond within 30 days.</div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  // Hero chat animation — messages appear one by one on load
+  function initHeroChat() {
+    const messages = document.querySelectorAll('.chat-card .message');
+    messages.forEach(msg => {
+      msg.style.opacity = '0';
+      msg.style.transform = 'translateY(10px)';
+    });
+    messages.forEach((msg, i) => {
+      setTimeout(() => {
+        msg.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+        msg.style.opacity = '1';
+        msg.style.transform = 'translateY(0)';
+      }, 700 + i * 950);
+    });
+  }
+  window.addEventListener('load', initHeroChat);
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 90);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+  reveals.forEach(el => observer.observe(el));
+
+  // Tab switching — messages appear one by one
+  function switchTab(topic, btn) {
+    document.querySelectorAll('.conv-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.conv-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    const panel = document.getElementById('panel-' + topic);
+    panel.classList.add('active');
+    const items = panel.querySelectorAll('.conv-msg, .conv-insight');
+    items.forEach(el => {
+      el.style.transition = 'none';
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(10px)';
+    });
+    items.forEach((el, i) => {
+      setTimeout(() => {
+        el.style.transition = 'opacity 0.45s ease, transform 0.45s ease';
+        el.style.opacity = '1';
+        el.style.transform = 'translateY(0)';
+      }, i * 480 + 80);
+    });
+  }
+
+  // Animate first panel on load
+  document.addEventListener('DOMContentLoaded', () => {
+    const firstPanel = document.querySelector('.conv-panel.active');
+    if (firstPanel) {
+      const items = firstPanel.querySelectorAll('.conv-msg, .conv-insight');
+      items.forEach(el => {
+        el.style.transition = 'none';
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(10px)';
+      });
+      items.forEach((el, i) => {
+        setTimeout(() => {
+          el.style.transition = 'opacity 0.45s ease, transform 0.45s ease';
+          el.style.opacity = '1';
+          el.style.transform = 'translateY(0)';
+        }, 300 + i * 480);
+      });
+    }
+  });
+
+  // ToS modal
+  function openToS(e) {
+    if (e) e.preventDefault();
+    document.getElementById('tosModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeToS() {
+    document.getElementById('tosModal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function closeToSOutside(e) {
+    if (e.target === document.getElementById('tosModal')) closeToS();
+  }
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') { closePrivacy(); closeToS(); }
+  });
+
+  // Privacy modal
+  function openPrivacy(e) {
+    if (e) e.preventDefault();
+    document.getElementById('privacyModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closePrivacy() {
+    document.getElementById('privacyModal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function closePrivacyOutside(e) {
+    if (e.target === document.getElementById('privacyModal')) closePrivacy();
+  }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closePrivacy(); });
+
+  // Age check
+  function checkAge(select) {
+    const warning = document.getElementById('age-warning');
+    if (select.value === 'under18') {
+      warning.style.display = 'block';
+    } else {
+      warning.style.display = 'none';
+    }
+  }
+
+  // Form submit
+  function handleSubmit(btn) {
+    const form = btn.closest('.signup-form');
+    const name = form.querySelector('input[type="text"]').value.trim();
+    const email = form.querySelector('input[type="email"]').value.trim();
+    const ageSelect = form.querySelector('select');
+    const age = ageSelect ? ageSelect.value : '';
+    if (!name || !email) {
+      const orig = btn.textContent;
+      btn.textContent = 'Unesite ime i email adresu.';
+      btn.style.background = 'rgba(255,255,255,0.15)';
+      setTimeout(() => { btn.textContent = orig; btn.style.background = ''; }, 2800);
+      return;
+    }
+    const isMinor = age === 'under18';
+    btn.textContent = isMinor
+      ? '✓ Prijava primljena — bićeš kontaktiran/a uskoro.'
+      : '✓ Na listi si — hvala ti!';
+    btn.style.background = 'var(--sage)';
+    btn.disabled = true;
+  }
+
+  // Nav scroll — shadow + collapse links on mobile + banner hide
+  const banner = document.querySelector('.ai-banner');
+  const nav = document.querySelector('nav');
+  window.addEventListener('scroll', () => {
+    const scrolled = window.scrollY > 40;
+    nav.style.boxShadow = window.scrollY > 20 ? '0 4px 24px rgba(44,33,24,0.09)' : '';
+    if (scrolled) {
+      nav.classList.add('scrolled');
+      banner.classList.add('hidden');
+      nav.style.top = '0';
+    } else {
+      nav.classList.remove('scrolled');
+      banner.classList.remove('hidden');
+      nav.style.top = '37px';
+    }
+  });
+</script>
+</body>
+</html>
