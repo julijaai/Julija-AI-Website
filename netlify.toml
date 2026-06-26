@@ -2,6 +2,11 @@
   publish = "."
   edge_functions = "netlify/edge-functions"
 
+# SUPABASE_URL and SUPABASE_ANON_KEY are intentionally public (client-side).
+# Only SUPABASE_SERVICE_ROLE_KEY is a real secret and it never appears in HTML.
+[build.environment]
+  SECRETS_SCAN_OMIT_KEYS = "SUPABASE_URL,SUPABASE_ANON_KEY"
+
 # Block direct access to the .env reference file
 [[redirects]]
   from   = "/.env"
