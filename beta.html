@@ -246,15 +246,15 @@
     background: var(--sage);
   }
 
-  /* Voiceflow iframe */
-  .widget-wrap iframe {
+  /* Voiceflow widget container */
+  .widget-wrap #voiceflow-chat {
     display: block;
     width: 100%;
-    border: none;
+    height: 620px;
     min-height: 560px;
   }
   @media (max-width: 640px) {
-    .widget-wrap iframe { min-height: 480px; height: 480px; }
+    .widget-wrap #voiceflow-chat { height: 480px; min-height: 480px; }
   }
 
   /* ── FOOTER ── */
@@ -484,18 +484,7 @@
         </div>
       </div>
 
-      <!-- MEMORY: iframe src is set dynamically after auth so that userID is
-           passed to Voiceflow — this gives each user a persistent conversation
-           thread that resumes across sessions. -->
-      <iframe
-        id="vf-iframe"
-        width="100%"
-        height="620"
-        frameborder="0"
-        allow="microphone"
-        title="Razgovor sa Julijom AI"
-        style="display:block; min-height: 560px;"
-      ></iframe>
+      <div id="voiceflow-chat"></div>
 
     </div>
   </div>
@@ -602,6 +591,7 @@
   );
 
   let currentUserId = null;
+  let currentUserEmail = null;
   let sessionToken = null;
 
   window.addEventListener('DOMContentLoaded', async () => {
@@ -610,17 +600,47 @@
     if (session.user.banned_until) { window.location.href = '/login?pending=1'; return; }
 
     currentUserId = session.user.id;
+    currentUserEmail = session.user.email;
     sessionToken = session.access_token;
     document.getElementById('nav-email').textContent = session.user.email;
 
     // Keep token fresh for long sessions
     sb.auth.onAuthStateChange((_event, s) => {
-      if (s) { sessionToken = s.access_token; currentUserId = s.user.id; }
+      if (s) { sessionToken = s.access_token; currentUserId = s.user.id; currentUserEmail = s.user.email; }
     });
 
-    // Load Voiceflow with this user's ID so conversation persists across sessions
-    document.getElementById('vf-iframe').src =
-      `https://creator.voiceflow.com/share/6a01ed1393f91a17119ee633/environment/main/draft?userID=${encodeURIComponent(currentUserId)}`;
+    // Load persistent user memory from Supabase (cross-device, cross-browser).
+    // Julija uses this to remember who the user is across sessions.
+    const memRes = await fetch('/api/get-memory', {
+      headers: { 'Authorization': `Bearer ${sessionToken}` },
+    });
+    const userMemory = memRes.ok ? ((await memRes.json()).memory || '') : '';
+
+    // Load Voiceflow Chat Widget SDK.
+    // userID = email so that Voiceflow transcripts are immediately identifiable
+    // by person, not by an opaque UUID.
+    const vfScript = document.createElement('script');
+    vfScript.type = 'text/javascript';
+    vfScript.src = 'https://cdn.voiceflow.com/widget-next/bundle.mjs';
+    vfScript.onload = () => {
+      window.voiceflowChat.load({
+        verify: { projectID: '6a01ed1393f91a17119ee633' },
+        url: 'https://general-runtime.voiceflow.com',
+        versionID: 'development',
+        userID: currentUserEmail,
+        render: {
+          mode: 'embedded',
+          target: document.getElementById('voiceflow-chat'),
+        },
+        autostart: true,
+        session: {
+          variables: {
+            user_memory_from_db: userMemory,
+          },
+        },
+      });
+    };
+    document.head.appendChild(vfScript);
 
     // Upsert user profile — service role key stays in the edge function
     await fetch('/api/upsert-profile', {
@@ -637,6 +657,23 @@
     window.location.href = '/login';
   }
 
+  // voiceflow:interact fires when the user sends a message.
+  // Payload structure confirmed from widget bundle: { session, action: { type, payload } }
+  // Agent messages are stored in Voiceflow transcripts (identifiable by email userID).
+  window.addEventListener('message', (event) => {
+    if (typeof event.data !== 'string') return;
+    if (!event.data.startsWith('{"type":"voiceflow:')) return;
+    try {
+      const data = JSON.parse(event.data);
+      if (data.type === 'voiceflow:interact') {
+        const action = data.payload?.action;
+        if (action?.type === 'text' && action?.payload) {
+          saveMessage('user', action.payload);
+        }
+      }
+    } catch {}
+  });
+
   // Save conversation turns via edge function — service role key never reaches the browser
   async function saveMessage(role, content) {
     if (!currentUserId || !sessionToken) return;
@@ -650,12 +687,6 @@
     });
   }
 
-  // Listen for Voiceflow iframe messages to capture conversation
-  window.addEventListener('message', (event) => {
-    if (!event.data || typeof event.data !== 'object') return;
-    if (event.data.type === 'user-turn') saveMessage('user', event.data.payload);
-    if (event.data.type === 'agent-turn') saveMessage('assistant', event.data.payload);
-  });
 </script>
 </body>
 </html>
