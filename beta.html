@@ -609,12 +609,12 @@
       if (s) { sessionToken = s.access_token; currentUserId = s.user.id; currentUserEmail = s.user.email; }
     });
 
-    // Load persistent user memory from Supabase (cross-device, cross-browser).
-    // Julija uses this to remember who the user is across sessions.
-    const memRes = await fetch('/api/get-memory', {
+    // Fetch memory from Supabase and inject it into Voiceflow's runtime state
+    // before the widget loads — so Julija sees past context from the first message.
+    await fetch('/api/set-voiceflow-memory', {
+      method: 'POST',
       headers: { 'Authorization': `Bearer ${sessionToken}` },
     });
-    const userMemory = memRes.ok ? ((await memRes.json()).memory || '') : '';
 
     // Load Voiceflow Chat Widget SDK.
     // userID = email so that Voiceflow transcripts are immediately identifiable
@@ -633,11 +633,6 @@
           target: document.getElementById('voiceflow-chat'),
         },
         autostart: true,
-        session: {
-          variables: {
-            user_memory_from_db: userMemory,
-          },
-        },
       });
     };
     document.head.appendChild(vfScript);
