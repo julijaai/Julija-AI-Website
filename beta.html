@@ -484,11 +484,11 @@
         </div>
       </div>
 
-      <!-- MEMORY: conversation history is saved to Supabase.
-           Loading past context into Voiceflow requires API blocks
-           inside the Voiceflow editor — configure separately. -->
+      <!-- MEMORY: iframe src is set dynamically after auth so that userID is
+           passed to Voiceflow — this gives each user a persistent conversation
+           thread that resumes across sessions. -->
       <iframe
-        src="https://creator.voiceflow.com/share/6a01ed1393f91a17119ee633/environment/main/draft"
+        id="vf-iframe"
         width="100%"
         height="620"
         frameborder="0"
@@ -617,6 +617,10 @@
     sb.auth.onAuthStateChange((_event, s) => {
       if (s) { sessionToken = s.access_token; currentUserId = s.user.id; }
     });
+
+    // Load Voiceflow with this user's ID so conversation persists across sessions
+    document.getElementById('vf-iframe').src =
+      `https://creator.voiceflow.com/share/6a01ed1393f91a17119ee633/environment/main/draft?userID=${encodeURIComponent(currentUserId)}`;
 
     // Upsert user profile — service role key stays in the edge function
     await fetch('/api/upsert-profile', {
