@@ -42,18 +42,27 @@ export default async (request) => {
 
   // PATCH Voiceflow runtime state — set user_memory_from_db for this user
   // so Julija sees it from the very first interaction.
+  // 5-second timeout so a slow/unreachable Voiceflow endpoint never blocks the page.
   if (VF_API_KEY) {
-    await fetch(
-      `https://general-runtime.voiceflow.com/state/user/${encodeURIComponent(user.email)}/variables?versionID=development`,
-      {
-        method: 'PATCH',
-        headers: {
-          'Authorization': VF_API_KEY,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ user_memory_from_db: memory }),
-      }
-    );
+    try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 5000);
+      await fetch(
+        `https://general-runtime.voiceflow.com/state/user/${encodeURIComponent(user.email)}/variables?versionID=development`,
+        {
+          method: 'PATCH',
+          headers: {
+            'Authorization': VF_API_KEY,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ user_memory_from_db: memory }),
+          signal: controller.signal,
+        }
+      );
+      clearTimeout(timeoutId);
+    } catch {
+      // Timeout or network error — non-critical, widget still loads
+    }
   }
 
   return new Response(JSON.stringify({ ok: true }), {

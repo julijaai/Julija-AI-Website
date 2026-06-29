@@ -609,16 +609,9 @@
       if (s) { sessionToken = s.access_token; currentUserId = s.user.id; currentUserEmail = s.user.email; }
     });
 
-    // Fetch memory from Supabase and inject it into Voiceflow's runtime state
-    // before the widget loads — so Julija sees past context from the first message.
-    await fetch('/api/set-voiceflow-memory', {
-      method: 'POST',
-      headers: { 'Authorization': `Bearer ${sessionToken}` },
-    });
-
     // Load Voiceflow Chat Widget SDK.
-    // userID = email so that Voiceflow transcripts are immediately identifiable
-    // by person, not by an opaque UUID.
+    // userID = email for identifiable transcripts; launch payload passes the
+    // email into the Voiceflow LOAD Workflow which pulls memory from Supabase.
     const vfScript = document.createElement('script');
     vfScript.type = 'text/javascript';
     vfScript.src = 'https://cdn.voiceflow.com/widget-next/bundle.mjs';
@@ -628,6 +621,7 @@
         url: 'https://general-runtime.voiceflow.com',
         versionID: 'development',
         userID: currentUserEmail,
+        launch: { event: { type: 'launch', payload: { user_email: currentUserEmail } } },
         render: {
           mode: 'embedded',
           target: document.getElementById('voiceflow-chat'),
